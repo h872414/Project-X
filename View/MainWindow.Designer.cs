@@ -369,7 +369,7 @@ namespace DicomLoader.View
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "MainWindow";
             this.Text = "Awesome Project";
-            this.Icon = new Icon("../../../Resources/logo.ico");
+            this.Icon = new Icon("Resources/logo.ico");
         
             this.Resize += new System.EventHandler(this.SetResize);
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();

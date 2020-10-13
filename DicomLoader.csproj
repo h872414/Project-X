@@ -2118,7 +2118,9 @@
     <Content Include="Examples\Class 3 malocclusion\DICOM\Skull.PNG" />
     <Content Include="Resources\arrowLeft.png" />
     <Content Include="Resources\arrowRight.png" />
-    <Content Include="Resources\logo.ico" />
+    <Content Include="Resources\logo.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="packages\fo-dicom.Desktop.4.0.6\build\net45\fo-dicom.Desktop.targets" Condition="Exists('packages\fo-dicom.Desktop.4.0.6\build\net45\fo-dicom.Desktop.targets')" />
