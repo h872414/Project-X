@@ -50,33 +50,34 @@ namespace DicomLoader.View
 
         private void ImportFileBtnClick(object sender, EventArgs e)
         {
-            using(var result = new OpenFileDialog())
+            multipleImageEnable = false;
+            using var result = new OpenFileDialog
             {
-                result.InitialDirectory = Directory.GetCurrentDirectory();
-                result.Filter = "dicom files (*.dcm)|*.dcm|All files (*.*)|*.*";
-                result.FilterIndex = 1;
-                result.RestoreDirectory = true;
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Filter = "dicom files (*.dcm)|*.dcm|All files (*.*)|*.*",
+                FilterIndex = 1,
+                RestoreDirectory = true
+            };
 
-                if (result.ShowDialog() == DialogResult.OK)
+            if (result.ShowDialog() == DialogResult.OK)
+            {
+                singlePicture = controller.ImportDicomFile(result.FileName);
+                if (singlePicture != null)
                 {
-                    singlePicture = controller.ImportDicomFile(result.FileName);
-                    if (singlePicture != null)
-                    {
-                        inputPathLabel.Text = Path.GetFileName(result.FileName);
-                        pictureBox.Image = singlePicture;
-                        ReSet();
-                    }
-                    else
-                    {
-                        const string message = "Nem várt hiba a beolvasás közben. Kérem ellenőrizze a beolvasandó fájlt!";
-                        const string caption = "Hibás olvasás";
-                        var resultBox = MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-
+                    inputPathLabel.Text = Path.GetFileName(result.FileName);
+                    pictureBox.Image = singlePicture;
+                    ReSet();
                 }
+                else
+                {
+                    const string message = "Nem várt hiba a beolvasás közben. Kérem ellenőrizze a beolvasandó fájlt!";
+                    const string caption = "Hibás olvasás";
+                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
-           // var result = openFileDialog1.ShowDialog();
-            
+            // var result = openFileDialog1.ShowDialog();
+
         }
 
         private void leftBtn_Click(object sender, EventArgs e)
