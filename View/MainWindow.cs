@@ -119,19 +119,54 @@ namespace DicomLoader.View
 
         private void exportBtn_Click(object sender, EventArgs e)
         {
-            SaveFileDialog dialog = new SaveFileDialog();
+            using var dialog = new SaveFileDialog
+            {
+                InitialDirectory = Directory.GetCurrentDirectory(),
+                Filter = "JPEG Image|*.jpg",
+                Title = "Mentés képként"
+            };
+
             if (dialog.ShowDialog() == DialogResult.OK)
             {
                 if (multipleImageEnable)
-                {
-                    controller.ExportDir(dialog.FileName, images);
+                {    
+                    if (controller.ExportDir(dialog.FileName, images))
+                    {
+                        const string message = "Sikeres exportálás.";
+                        const string caption = "Sikeres exportálás";
+                        MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    else
+                    {
+                        const string message = "Nem várt hiba a exportálás közben. Kérem ellenőrizze az exportálandó fájlt!";
+                        const string caption = "Hibás olvasás";
+                        MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 else
                 {
-                    controller.ExportFile(dialog.FileName, singlePicture);
+                    if (controller.ExportFile(dialog.FileName, singlePicture))
+                    {
+
+                        if (controller.ExportDir(dialog.FileName, images))
+                        {
+                            const string message = "Sikeres exportálás.";
+                            const string caption = "Sikeres exportálás";
+                            MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            const string message = "Nem várt hiba a exportálás közben. Kérem ellenőrizze az exportálandó fájlt!";
+                            const string caption = "Hibás olvasás";
+                            MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+
                 }
 
             }
+
+
         }
 
         private void dicomImportToolStripMenuItem_Click(object sender, EventArgs e)

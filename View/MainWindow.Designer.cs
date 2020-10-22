@@ -421,7 +421,7 @@ namespace DicomLoader.View
         private System.Windows.Forms.ToolStripMenuItem dicomImportToolStripMenuItem;
         private System.Windows.Forms.Panel singleImportPanel;
         private System.Windows.Forms.Panel exportPanel;
-        private System.Windows.Forms.Panel importPanel;
+
         private System.Windows.Forms.Panel multiImportPanel;
         private System.Windows.Forms.Panel currentPanel;
         private System.Windows.Forms.Label imageCountLabeld;

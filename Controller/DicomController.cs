@@ -1,11 +1,15 @@
 ﻿
 using Dicom.Imaging;
+
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 
 namespace DicomLoader.Controller
@@ -65,8 +69,29 @@ namespace DicomLoader.Controller
         {
             foreach (var image in images.Select((value, index) => new { value, index }))
             {
-                var bmp = new Bitmap(image.value);
-                bmp.Save(path + image.index +".jpg" , ImageFormat.Jpeg);
+               
+                try
+                {
+                    var bmp = new Bitmap(image.value);
+                    bmp.Save(path + image.index + ".jpg", ImageFormat.Jpeg);
+                }
+                catch(ArgumentNullException exception)
+                {
+                    Debug.WriteLine(exception.ToString());
+                    string message = "Nem várt hiba az exportálás során, kérjük ellenőrizze a beállításokat.";
+                    const string caption = "Sikertelen mentés";
+                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+                catch (NullReferenceException exception)
+                {
+                    Debug.WriteLine(exception.ToString());
+                    string message = "Az exportáláshoz előszőr olvasson be egy dicom filet.";
+                    const string caption = "Sikertelen mentés";
+                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return false;
+                }
+
             }
             return true;
         }
@@ -78,8 +103,27 @@ namespace DicomLoader.Controller
         /// <returns></returns>
         public bool ExportFile(string path, Bitmap image)
         {
-            var bmp = new Bitmap(image);
-            bmp.Save(path + ".jpg", ImageFormat.Jpeg);
+            try 
+            {
+                var bmp = new Bitmap(image);
+                bmp.Save(path + ".jpg", ImageFormat.Jpeg);
+            }
+            catch (NullReferenceException exception)
+            {
+                Debug.WriteLine(exception.ToString());
+                string message = "Az exportáláshoz előszőr olvasson be egy dicom filet.";
+                const string caption = "Sikertelen mentés";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+            catch (ArgumentNullException exception)
+            {
+                Debug.WriteLine(exception.ToString());
+                string message = "Nem várt hiba az exportálás során, kérjük ellenőrizze a beállításokat.";
+                const string caption = "Sikertelen mentés";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return false;
+            }
             return false;
         }
     }
