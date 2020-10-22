@@ -50,15 +50,33 @@ namespace DicomLoader.View
 
         private void ImportFileBtnClick(object sender, EventArgs e)
         {
-            var result = openFileDialog1.ShowDialog();
-
-            if (result == DialogResult.OK)
+            using(var result = new OpenFileDialog())
             {
-                inputPathLabel.Text = Path.GetFileName(openFileDialog1.FileName);
-                singlePicture = controller.ImportDicomFile(openFileDialog1.FileName);
-                pictureBox.Image = singlePicture;
-                ReSet();
+                result.InitialDirectory = Directory.GetCurrentDirectory();
+                //result.Filter = "dicom files (*.dcm)|*.dcm|All files (*.*)|*.*";
+                result.FilterIndex = 1;
+                result.RestoreDirectory = true;
+
+                if (result.ShowDialog() == DialogResult.OK)
+                {
+                    singlePicture = controller.ImportDicomFile(result.FileName);
+                    if (singlePicture != null)
+                    {
+                        inputPathLabel.Text = Path.GetFileName(result.FileName);
+                        pictureBox.Image = singlePicture;
+                        ReSet();
+                    }
+                    else
+                    {
+                        const string message = "Nem várt hiba a beolvasás közben. Kérem ellenőrizze a beolvasandó fájlt!";
+                        const string caption = "Hibás olvasás";
+                        var resultBox = MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+
+                }
             }
+           // var result = openFileDialog1.ShowDialog();
+            
         }
 
         private void leftBtn_Click(object sender, EventArgs e)
@@ -92,10 +110,10 @@ namespace DicomLoader.View
             pictureBox.Location = new Point((viewerPanel.Width - pictureBox.Width) / 2, (viewerPanel.Height - pictureBox.Height) / 2);
             singleImportPanel.Size = new Size(Convert.ToInt32(splitContainer.Panel1.Width), Convert.ToInt32(splitContainer.Panel1.Height * 0.35));
             exportPanel.Size = new Size(Convert.ToInt32(splitContainer.Panel1.Width), Convert.ToInt32(splitContainer.Panel1.Height * 0.3));
-            ResizeElemets(singleLabel, singleImportPanel, loc: 0.05);
-            ResizeElemets(importBtn, singleImportPanel, loc: 0.3);
-            ResizeElemets(choosenLabel, singleImportPanel, loc: 0.6);
-            ResizeElemets(inputPathLabel, singleImportPanel, loc: 0.8);
+            ResizeElemets(singleLabel, singleImportPanel, loc: 0.3);
+            ResizeElemets(importBtn, singleImportPanel, loc: 0.5);
+            ResizeElemets(choosenLabel, singleImportPanel, loc: 0.7);
+            ResizeElemets(inputPathLabel, singleImportPanel, loc: 0.9);
 
             ResizeElemets(multipleLabel, multiImportPanel, loc: 0.05);
             ResizeElemets(importDirBtn, multiImportPanel, loc: 0.3);

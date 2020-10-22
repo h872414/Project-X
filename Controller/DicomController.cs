@@ -1,11 +1,13 @@
 ﻿
 using Dicom.Imaging;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using System.Windows.Media.Imaging;
 
 namespace DicomLoader.Controller
@@ -20,16 +22,30 @@ namespace DicomLoader.Controller
         public Bitmap ImportDicomFile(string path)
         {
             ImageManager.SetImplementation(WPFImageManager.Instance);
-            var image = new DicomImage(path);
-            var renderImage = image.RenderImage().As<WriteableBitmap>();
-            using (MemoryStream outStream = new MemoryStream())
+            DicomImage image = null;
+            WriteableBitmap renderImage = null;
+            try
             {
+                image = new DicomImage(path);
+                renderImage = image.RenderImage().As<WriteableBitmap>();
+            }catch(Dicom.DicomException exception)
+            {
+                Debug.WriteLine(exception.ToString());
+                const string message = "Nem megfelelő fájlformátum. Kérem válasszon ki megfelelő kiterjesztésű fájlt!";
+                const string caption = "Hibás input";
+                var result = MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
+            using (MemoryStream outStream = new MemoryStream())
+            {         
                 BitmapEncoder enc = new BmpBitmapEncoder();
                 enc.Frames.Add(BitmapFrame.Create((BitmapSource)renderImage));
                 enc.Save(outStream);
                 Bitmap bmp = new Bitmap(outStream);
                 return bmp;
             }
+            return null;
+
         }
         /// <summary>
         /// Read multiple DICOM file from a directory async
