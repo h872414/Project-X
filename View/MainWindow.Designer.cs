@@ -253,9 +253,9 @@ namespace DicomLoader.View
             this.currentPanel.Controls.Add(this.currentLabel);
             this.currentPanel.Controls.Add(this.imageCountLabeld);
             this.currentPanel.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.currentPanel.Location = new System.Drawing.Point(106, 402);
+            this.currentPanel.Location = new System.Drawing.Point(97, 402);
             this.currentPanel.Name = "currentPanel";
-            this.currentPanel.Size = new System.Drawing.Size(455, 68);
+            this.currentPanel.Size = new System.Drawing.Size(464, 68);
             this.currentPanel.TabIndex = 15;
             // 
             // currentLabel
@@ -349,7 +349,7 @@ namespace DicomLoader.View
             this.dicomImportToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(900, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(882, 28);
             this.menuStrip1.TabIndex = 1;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -364,13 +364,12 @@ namespace DicomLoader.View
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(900, 500);
+            this.ClientSize = new System.Drawing.Size(882, 453);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
+            this.MinimumSize = new System.Drawing.Size(900, 500);
             this.Name = "MainWindow";
             this.Text = "Awesome Project";
-            this.Icon = new Icon("Resources/logo.ico");
-        
             this.Resize += new System.EventHandler(this.SetResize);
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).EndInit();
             this.splitContainer.Panel1.ResumeLayout(false);
