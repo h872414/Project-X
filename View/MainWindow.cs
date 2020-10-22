@@ -53,6 +53,7 @@ namespace DicomLoader.View
             using(var result = new OpenFileDialog())
             {
                 result.InitialDirectory = Directory.GetCurrentDirectory();
+                result.Filter = "dicom files (*.dcm)|*.dcm|All files (*.*)|*.*";
                 result.FilterIndex = 1;
                 result.RestoreDirectory = true;
 
