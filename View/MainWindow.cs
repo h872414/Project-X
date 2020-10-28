@@ -21,14 +21,16 @@ namespace DicomLoader.View
         public MainWindow()
         {
             InitializeComponent();
-            this.controller = new DicomController();
             ReSet();
+            this.controller = new DicomController();
+           
         }
 
         private async void ImportDirBtnClick(object sender, EventArgs e)
-        {
+        {         
             using (var fbd = new FolderBrowserDialog())
             {
+                fbd.SelectedPath = Directory.GetCurrentDirectory();
                 DialogResult result = fbd.ShowDialog();
 
                 if (result == DialogResult.OK)
@@ -38,11 +40,17 @@ namespace DicomLoader.View
                     images = await task;
                     multipleImageEnable = true;
 
-                    pictureBox.Image = images.ElementAt(currentImage);
-                    inputDirPathLabel.Text = Path.GetFileName(Path.GetDirectoryName(files[0]));
-                    imageCountLabeld.Text = images.Count().ToString() + " / " + currentImage.ToString();
-                    ReSet();
-                    MessageBox.Show("Files found: " + files.Length.ToString(), "Message");
+                    if(images != null)
+                    {
+                        pictureBox.Image = images.ElementAt(currentImage);
+                        inputDirPathLabel.Text = Path.GetFileName(Path.GetDirectoryName(files[0]));
+                        imageCountLabeld.Text = images.Count().ToString() + " / " + currentImage.ToString();
+                        ReSet();
+                        string message = images.Count().ToString() + " fájl olvasása sikeres";
+                        const string caption = "Sikeres beolvasás";
+                        MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    
                 }
             }
 

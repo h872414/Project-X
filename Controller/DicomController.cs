@@ -57,21 +57,33 @@ namespace DicomLoader.Controller
         public async Task<IEnumerable<Bitmap>> ImportDicomDir(string[] pathArray)
         {
             var maps = new List<Bitmap>();
+            DicomImage image = null;
+            WriteableBitmap renderImage = null;
             ImageManager.SetImplementation(WPFImageManager.Instance);
-            foreach (var path in pathArray)
+            try
             {
-                var image = new DicomImage(path);
-                var renderImage = image.RenderImage().As<WriteableBitmap>();
-                using (MemoryStream outStream = new MemoryStream())
+                foreach (var path in pathArray)
                 {
-                    BitmapEncoder enc = new BmpBitmapEncoder();
-                    enc.Frames.Add(BitmapFrame.Create((BitmapSource)renderImage));
-                    enc.Save(outStream);
-                    Bitmap bmp = new Bitmap(outStream);
-                    maps.Add(bmp);
+                    image = new DicomImage(path);
+                    renderImage = image.RenderImage().As<WriteableBitmap>();
+                    using (MemoryStream outStream = new MemoryStream())
+                    {
+                        BitmapEncoder enc = new BmpBitmapEncoder();
+                        enc.Frames.Add(BitmapFrame.Create((BitmapSource)renderImage));
+                        enc.Save(outStream);
+                        Bitmap bmp = new Bitmap(outStream);
+                        maps.Add(bmp);
+                    }
                 }
+                return maps;
+            }catch(Dicom.DicomException exception)
+            {
+                Debug.WriteLine(exception.ToString());
+                const string message = "Nem megfelelő fájlformátum. Kérem válasszon ki megfelelő kiterjesztésű fájlt!";
+                const string caption = "Hibás input";
+                var result = MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            return maps;
+            return null;
         }
         /// <summary>
         /// Export the all image stored in the memory
