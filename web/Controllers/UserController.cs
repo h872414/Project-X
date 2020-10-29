@@ -249,6 +249,10 @@ namespace DicomLoaderWeb.Controllers
 
             if (CheckPassword(user.Salt, user.Password, Password))
             {
+                if(user.Status != UserStatus.ACTIVE)
+                {
+                    return Ok(new { accepted = false, error = "A felhasználó nincs aktiválva" });
+                }
                 user.RegDate = user.RegDate.AddDays(90);
 
                 if ((user.RegDate > DateTime.Today))
