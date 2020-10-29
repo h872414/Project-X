@@ -1,0 +1,25 @@
+﻿@{
+    ViewData["Title"] = "Error";
+}
+@model DicomLoaderWeb.Models.Error
+
+<div class="container d-flex h-100 text-center">
+    <div class="row align-self-center w-100">
+        <div class="col-8 mx-auto">
+            <div class="jumbotron">
+                <h1 class="display-4">Ops...</h1>
+                <p class="lead">Valami hiba történt.</p>
+                <hr class="my-4">
+                @if (Model.ErrorMessage != null)
+                {
+                    <div class="lead my-2" role="alert">
+                        @Model.ErrorMessage
+                    </div>
+                }
+                <p class="lead">
+                    <a class="btn btn-primary my-3" asp-controller="User" asp-action="Index" role="button">Kezdőlap</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
