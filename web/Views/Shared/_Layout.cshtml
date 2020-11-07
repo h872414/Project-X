@@ -35,6 +35,8 @@
                         <a class="@(ViewContext.RouteData.Values["Action"].ToString() == "Users" ? "nav-item nav-link active" : "nav-item nav-link")" asp-area="" asp-controller="User" asp-action="Users">Felhasználók</a>
 
                     }
+                    <a class="nav-item nav-link" asp-area="" asp-controller="User" asp-action="Logout">Kijelentkezés </a>
+
                 </div>
             </div>
         </nav>

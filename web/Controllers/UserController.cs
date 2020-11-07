@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2.HPack;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
@@ -116,7 +117,6 @@ namespace DicomLoaderWeb.Controllers
                 _Context.Add(user);
                 _Context.Entry(user).State = EntityState.Modified;
                 _Context.SaveChanges();
-                HttpContext.Session.SetString("_User", user.Role.ToString());
                 return RedirectToAction("Users");
             }
             catch (Exception)
@@ -159,8 +159,12 @@ namespace DicomLoaderWeb.Controllers
             User user = null;
             try
             {
-                var users = await _Context.Users.Where(x => x.Email == Email).ToArrayAsync();
-                user = users[0];
+
+ 
+                    var users = await _Context.Users.Where(x => x.Email == Email).ToArrayAsync();
+                    user = users[0];
+          
+
             }
             catch (ArgumentNullException)
             {
@@ -196,6 +200,15 @@ namespace DicomLoaderWeb.Controllers
 
             var error = new Error { ErrorMessage = "Hibás bejelentkezési adatok" };
             return RedirectToAction("Error", error);
+        }
+
+        [HttpGet]
+        [Route("/logout")]
+        public async Task<IActionResult> logout() {
+            HttpContext.Session.Remove("_User");
+
+            return RedirectToAction("index");
+
         }
         private String HashPassword(byte[] Salt, String Password)
         {
