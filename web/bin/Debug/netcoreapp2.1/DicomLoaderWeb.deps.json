@@ -37,13 +37,25 @@
           "Microsoft.NETCore.App": "2.1.0",
           "Microsoft.VisualStudio.Web.BrowserLink": "2.1.1",
           "Microsoft.VisualStudio.Web.CodeGeneration.Design": "2.1.10",
-          "System.ComponentModel.Annotations": "4.7.0"
+          "System.ComponentModel.Annotations": "4.7.0",
+          "fo-dicom.Desktop": "4.0.6"
         },
         "runtime": {
           "DicomLoaderWeb.dll": {}
         },
         "compile": {
           "DicomLoaderWeb.dll": {}
+        }
+      },
+      "fo-dicom.Desktop/4.0.6": {
+        "runtime": {
+          "lib/net45/Dicom.Core.dll": {
+            "assemblyVersion": "4.0.6.0",
+            "fileVersion": "4.0.6.0"
+          }
+        },
+        "compile": {
+          "lib/net45/Dicom.Core.dll": {}
         }
       },
       "Microsoft.AspNetCore/2.1.7": {
@@ -3819,6 +3831,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "fo-dicom.Desktop/4.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ZblXXAMcQN7xHc7OuQ+Jqz5U5dlT9gTPk36aWmJnWCQ/qqY8bjo4uvLZPvnHy4HUDZWAc06pJfw+TJ41V2KmYA==",
+      "path": "fo-dicom.desktop/4.0.6",
+      "hashPath": "fo-dicom.desktop.4.0.6.nupkg.sha512"
     },
     "Microsoft.AspNetCore/2.1.7": {
       "type": "package",
