@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DicomLoaderWeb.Controllers
 {
-    public class UserController : Controller
+    public class UserController : Controller, IUserController
     {
         private readonly EFContext _Context = new EFContext();
 
@@ -204,13 +204,13 @@ namespace DicomLoaderWeb.Controllers
 
         [HttpGet]
         [Route("/logout")]
-        public async Task<IActionResult> logout() {
+        public  IActionResult Logout() {
             HttpContext.Session.Remove("_User");
 
             return RedirectToAction("index");
 
         }
-        private String HashPassword(byte[] Salt, String Password)
+        static private String HashPassword(byte[] Salt, String Password)
         {
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
                 password: Password,
@@ -220,7 +220,7 @@ namespace DicomLoaderWeb.Controllers
                 numBytesRequested: 256 / 8));
             return hashed;
         }
-        private Boolean CheckPassword(String Salt, String PasswordStored, String PasswordInput)
+        public static Boolean CheckPassword(String Salt, String PasswordStored, String PasswordInput)
         {
 
             String hashed = HashPassword(Convert.FromBase64String(Salt), PasswordInput);
@@ -239,58 +239,6 @@ namespace DicomLoaderWeb.Controllers
             return View(error);
         }
 
-        //Handle HTTP request from desktop App
-        [HttpPost]
-        [Route("/SignIn")]
-        public async Task<ActionResult> GetData(String Email, String Password)
-        {
-            User user = null;
 
-            try
-            {
-                var users = await _Context.Users.Where(x => x.Email == Email).ToArrayAsync();
-                user = users[0];
-            }
-            catch (ArgumentNullException)
-            {
-                return Ok(new { accepted = false, error = "Hibás email/jelszó" });
-            }
-            catch (IndexOutOfRangeException)
-            {
-                return Ok(new { accepted = false, error = "Az email cím nincs regisztrálva" });
-            }
-
-            if (CheckPassword(user.Salt, user.Password, Password))
-            {
-                if(user.Status != UserStatus.ACTIVE)
-                {
-                    return Ok(new { accepted = false, error = "A felhasználó nincs aktiválva" });
-                }
-                user.RegDate = user.RegDate.AddDays(90);
-
-                if ((user.RegDate > DateTime.Today))
-                {
-                    var EndOfLicense = user.RegDate.Year + "," + user.RegDate.Month + "," + user.RegDate.Day;
-                    return Ok(new {
-                        accepted = true,
-                        error = "none",
-                        user = new {
-                            firstname = user.FirstName,
-                            lastname = user.LastName,
-                            licenseDate = EndOfLicense
-                        } });
-                }
-                else
-                {
-                    var EndOfLicense = user.RegDate.Year + "/" + user.RegDate.Month + "/" + user.RegDate.Day;
-                    return Ok(new { accepted = false, error = "Lejárt license" });
-                }
-            }
-
-
-
-                return Ok(new {accepted = false, error = "Hibás jelszó" });
-
-        }
     }
 }

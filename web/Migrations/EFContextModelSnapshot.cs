@@ -16,6 +16,32 @@ namespace DicomLoaderWeb.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.14-servicing-32113");
 
+            modelBuilder.Entity("DicomLoaderWeb.Models.Record", b =>
+                {
+                    b.Property<int>("RecordId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<int?>("ID")
+                        .IsRequired();
+
+                    b.Property<string>("Image")
+                        .IsRequired();
+
+                    b.Property<string>("PatientName")
+                        .IsRequired();
+
+                    b.Property<DateTime>("RecordDate");
+
+                    b.HasKey("RecordId");
+
+                    b.HasIndex("ID");
+
+                    b.ToTable("Records");
+                });
+
             modelBuilder.Entity("DicomLoaderWeb.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
@@ -61,13 +87,22 @@ namespace DicomLoaderWeb.Migrations
 
                     b.Property<int>("Role");
 
-                    b.Property<string>("Salt");
+                    b.Property<string>("Salt")
+                        .IsRequired();
 
                     b.Property<int>("Status");
 
                     b.HasKey("ID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DicomLoaderWeb.Models.Record", b =>
+                {
+                    b.HasOne("DicomLoaderWeb.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("ID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

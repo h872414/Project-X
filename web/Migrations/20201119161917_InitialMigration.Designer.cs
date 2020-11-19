@@ -9,14 +9,40 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DicomLoaderWeb.Migrations
 {
     [DbContext(typeof(EFContext))]
-    [Migration("20201028164332_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20201119161917_InitialMigration")]
+    partial class InitialMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.1.14-servicing-32113");
+
+            modelBuilder.Entity("DicomLoaderWeb.Models.Record", b =>
+                {
+                    b.Property<int>("RecordId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<int?>("ID")
+                        .IsRequired();
+
+                    b.Property<string>("Image")
+                        .IsRequired();
+
+                    b.Property<string>("PatientName")
+                        .IsRequired();
+
+                    b.Property<DateTime>("RecordDate");
+
+                    b.HasKey("RecordId");
+
+                    b.HasIndex("ID");
+
+                    b.ToTable("Records");
+                });
 
             modelBuilder.Entity("DicomLoaderWeb.Models.Role", b =>
                 {
@@ -63,13 +89,22 @@ namespace DicomLoaderWeb.Migrations
 
                     b.Property<int>("Role");
 
-                    b.Property<string>("Salt");
+                    b.Property<string>("Salt")
+                        .IsRequired();
 
                     b.Property<int>("Status");
 
                     b.HasKey("ID");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("DicomLoaderWeb.Models.Record", b =>
+                {
+                    b.HasOne("DicomLoaderWeb.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("ID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }
