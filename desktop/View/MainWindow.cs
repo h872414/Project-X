@@ -17,12 +17,14 @@ namespace DicomLoader.View
         Bitmap singlePicture;
         int currentImage = 0;
         bool multipleImageEnable = false;
+        String UserEmail;
 
-        public MainWindow()
+        public MainWindow(String email)
         {
             InitializeComponent();
             ReSet();
             this.controller = new DicomController();
+            this.UserEmail = email;
            
         }
 
@@ -200,6 +202,11 @@ namespace DicomLoader.View
         {
             this.Controls.Add(this.splitContainer);
             ReSet();
+        }
+
+        private void dicomUploadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new UploadWindow(UserEmail).Show();
         }
     }
 }

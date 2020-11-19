@@ -67,5 +67,37 @@ namespace DicomLoader.Controller
             return false;
 
         }
+
+        public async Task<bool> Upload(string Email, string PatientName, string DicomImage, string Description, DateTime RecordDate)
+        {
+            String responseBody = null;
+            var parameters = new Dictionary<string, string> { 
+                { "Email", Email }, 
+                { "DicomImage", DicomImage },
+                { "PatientName",PatientName },
+                { "Description", Description },
+                { "Date", RecordDate.ToString() }
+            };
+            var encodedContent = new FormUrlEncodedContent(parameters);
+
+            using var response = await client.PostAsync(ConfigurationManager.AppSettings["UploadURL"], encodedContent);
+
+            try
+            {
+                response.EnsureSuccessStatusCode();
+                return true;
+            }
+            catch (HttpRequestException exception)
+            {
+                Debug.WriteLine(exception.ToString());
+                Debug.WriteLine("Status Code: " + response.StatusCode);
+                const string message = "Hiba a feltöltés közben";
+                string caption = "Ellenőrizze a kapcsolatás \n" + response.StatusCode + " hiba";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+
+        }
     }
 }
