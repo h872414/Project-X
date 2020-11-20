@@ -60,6 +60,7 @@ namespace DicomLoader.View
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.dicomImportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dicomUploadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.fileSystemWatcher1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer)).BeginInit();
             this.splitContainer.Panel1.SuspendLayout();
@@ -346,7 +347,8 @@ namespace DicomLoader.View
             // 
             this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.dicomImportToolStripMenuItem});
+            this.dicomImportToolStripMenuItem,
+            this.dicomUploadToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(882, 28);
@@ -359,6 +361,13 @@ namespace DicomLoader.View
             this.dicomImportToolStripMenuItem.Size = new System.Drawing.Size(116, 24);
             this.dicomImportToolStripMenuItem.Text = "Dicom Import";
             this.dicomImportToolStripMenuItem.Click += new System.EventHandler(this.dicomImportToolStripMenuItem_Click);
+            // 
+            // dicomUploadToolStripMenuItem
+            // 
+            this.dicomUploadToolStripMenuItem.Name = "dicomUploadToolStripMenuItem";
+            this.dicomUploadToolStripMenuItem.Size = new System.Drawing.Size(120, 24);
+            this.dicomUploadToolStripMenuItem.Text = "Dicom Upload";
+            this.dicomUploadToolStripMenuItem.Click += new System.EventHandler(this.dicomUploadToolStripMenuItem_Click);
             // 
             // MainWindow
             // 
@@ -424,6 +433,7 @@ namespace DicomLoader.View
         private System.Windows.Forms.Panel multiImportPanel;
         private System.Windows.Forms.Panel currentPanel;
         private System.Windows.Forms.Label imageCountLabeld;
+        private System.Windows.Forms.ToolStripMenuItem dicomUploadToolStripMenuItem;
     }
 
 }

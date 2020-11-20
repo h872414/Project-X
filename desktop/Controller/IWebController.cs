@@ -9,5 +9,6 @@ namespace DicomLoader.Controller
     interface IWebController
     {
         Task<Boolean> SignIn(String Email, String password);
+        Task<Boolean> Upload(String Email, String PatientName, String DicomImage, String Description, DateTime RecordDate);
     }
 }

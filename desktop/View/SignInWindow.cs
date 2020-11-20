@@ -10,7 +10,7 @@ namespace DicomLoader.View
 {
     public partial class SignInWindow : Form
     {
-        IWebController controller = new WebController();
+        readonly IWebController controller = new WebController();
         public SignInWindow()
         {
             InitializeComponent();
@@ -40,7 +40,7 @@ namespace DicomLoader.View
             if (result)
             {
                
-                new MainWindow().Show();
+                new MainWindow(email).Show();
                 this.Hide();
   
             }

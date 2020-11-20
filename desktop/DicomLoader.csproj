@@ -100,10 +100,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\DicomController.cs" />
+    <Compile Include="Controller\Imp\DicomController.cs" />
     <Compile Include="Controller\IDicomController.cs" />
     <Compile Include="Controller\IWebController.cs" />
-    <Compile Include="Controller\WebController.cs" />
+    <Compile Include="Controller\Imp\WebController.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -124,6 +124,12 @@
     <Compile Include="View\SignInWindow.Designer.cs">
       <DependentUpon>SignInWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\UploadWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\UploadWindow.Designer.cs">
+      <DependentUpon>UploadWindow.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -138,6 +144,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\SignInWindow.resx">
       <DependentUpon>SignInWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\UploadWindow.resx">
+      <DependentUpon>UploadWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Examples\1010_brain_mr_02_lee\img_000.dcm" />
     <None Include="Examples\1010_brain_mr_02_lee\img_001.dcm" />
