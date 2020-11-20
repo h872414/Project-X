@@ -1,0 +1,51 @@
+﻿@{
+    ViewBag.Title = "Rekordok";
+}
+@model IEnumerable<DicomLoaderWeb.Models.Record>
+    <!--Main-->
+
+
+    @for (var i= 0; i < Model.Count();) { 
+<div class="card-deck my-5 container-fluid">
+    <div class="card col-4">
+        <img class="card-img-top" src="@Model.ElementAt(i).Image" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Megjegyzés</h5>
+            <p class="card-text">@Model.ElementAt(i).Image</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i).RecordDate </small>
+            <small class="text-muted">Feltöltés ideje: @Model.Count() </small>
+           
+        </div>
+    </div>
+    <div class="card col-4">
+        <img class="card-img-top" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO 9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Megjegyzés</h5>
+            <p class="card-text">@Model.ElementAt(i).Description</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i).RecordDate </small>
+            <small class="text-muted">Feltöltés ideje: @Model.Count() </small>
+            <small class="text-muted">Feltöltés ideje: @i </small>
+        </div>
+    </div>
+    <div class="card col-4">
+        <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">Megjegyzés</h5>
+            <p class="card-text">@Model.ElementAt(i).Description</p>
+        </div>
+        <div class="card-footer">
+            <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i).RecordDate </small>
+            <small class="text-muted">Feltöltés ideje: @Model.Count() </small>
+            <small class="text-muted">Feltöltés ideje: @i </small>
+        </div>
+    </div>
+</div>
+
+        i += 3;
+    }
+
+<!--/Main-->

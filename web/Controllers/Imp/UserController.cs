@@ -37,13 +37,11 @@ namespace DicomLoaderWeb.Controllers
             return View(users);
         }
 
-
         public IActionResult Registration()
         {
             User user = new User();
             return View(user);
         }
-
 
         [HttpPost]
         [AutoValidateAntiforgeryToken]
@@ -159,12 +157,8 @@ namespace DicomLoaderWeb.Controllers
             User user = null;
             try
             {
-
- 
-                    var users = await _Context.Users.Where(x => x.Email == Email).ToArrayAsync();
-                    user = users[0];
-          
-
+                var users = await _Context.Users.Where(x => x.Email == Email).ToArrayAsync();
+                user = users[0];    
             }
             catch (ArgumentNullException)
             {
@@ -187,6 +181,7 @@ namespace DicomLoaderWeb.Controllers
                 if ((user.RegDate > DateTime.Today))
                 {
                     HttpContext.Session.SetString("_User", user.Role.ToString());
+                    HttpContext.Session.SetString("_UId", user.ID.ToString());
                     return RedirectToAction("License", user);
                 }
                 else
@@ -232,13 +227,38 @@ namespace DicomLoaderWeb.Controllers
             return false;
         }
 
-
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(Error error)
         {
             return View(error);
         }
 
+        public async Task<IActionResult> Records()
+        {
+            var Id = Convert.ToInt32(HttpContext.Session.GetString("_UId"));
 
+
+            if (Id == 0) return RedirectToAction("Error", new Error { ErrorMessage = "Nem létező felhasználó" });
+
+            try
+            {
+                var Users = await _Context.Users.Where(x => x.ID == Id).ToArrayAsync();
+                if (Users.Length == 0) return RedirectToAction("Error", new Error { ErrorMessage = "Nem létező felhasználó" });
+
+                var User = Users[0];
+
+                var Records = await _Context.Records.Where(x => x.User == User).ToArrayAsync();
+                if(Records.Length == 0) return RedirectToAction("Error", new Error { ErrorMessage = "A felhasználóhoz nem tartozik rekord" });
+
+                return View(Records);
+            }
+            catch (Exception)
+            {
+
+            }
+
+            return View();
+            throw new NotImplementedException();
+        }
     }
 }

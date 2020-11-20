@@ -142,3 +142,4 @@ C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Debug\netcoreapp2.1\DicomLoad
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Debug\netcoreapp2.1\DicomLoaderWeb.pdb
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Debug\netcoreapp2.1\DicomLoaderWeb.genruntimeconfig.cache
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Debug\netcoreapp2.1\DicomLoaderWeb.csproj.CopyComplete
+C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Debug\netcoreapp2.1\Razor\Views\User\Records.cshtml.g.cs
