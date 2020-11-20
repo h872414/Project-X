@@ -15,7 +15,7 @@ namespace DicomLoader.View
 {
     public partial class UploadWindow : Form
     {
-        String DicomImage = null;
+        String DicomImage = "data:image/png;base64, ";
         readonly IWebController Controller = new WebController();
         readonly String UserEmail;
         public UploadWindow(String Email)
@@ -40,7 +40,7 @@ namespace DicomLoader.View
                 try
                 {
                     byte[] imageArray = File.ReadAllBytes(Result.FileName);
-                    DicomImage = Convert.ToBase64String(imageArray);
+                    DicomImage += Convert.ToBase64String(imageArray);
                 }catch(Exception exception)
                 {
                     Debug.WriteLine(exception.ToString());
@@ -58,9 +58,9 @@ namespace DicomLoader.View
             String PatientName = NameInput.Text.Trim();
             String Description = DescriptionInput.Text.Trim();
             DateTime RecordDate = DateInput.Value;
-            if(DicomImage != null)
+            if(DicomImage != "data:image/png;base64, ")
             {
-               Task<bool> UploadResult = Controller.Upload(UserEmail, DicomImage,PatientName,Description,RecordDate);
+               Task<bool> UploadResult = Controller.Upload(UserEmail,PatientName, DicomImage,Description, RecordDate);
                 if(await UploadResult)
                 {
                     const string message = "Sikeresen felöltötte a file-t";
@@ -73,7 +73,8 @@ namespace DicomLoader.View
                     const string caption = "Kapcsolat hiba";
                     MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+                DicomImage = "data:image/png;base64, ";
+
             }
             
         }

@@ -16,11 +16,7 @@ namespace DicomLoader.Controller
 {
     public class DicomController : IDicomController
     {
-        /// <summary>
-        /// Read a single DICOM file and load it into a Bitmap
-        /// </summary>
-        /// <param name="path">DICOM file path</param>
-        /// <returns>DICOM image in Btimap</returns>
+
         public Bitmap ImportDicomFile(string path)
         {
             ImageManager.SetImplementation(WPFImageManager.Instance);
@@ -49,11 +45,7 @@ namespace DicomLoader.Controller
             return null;
 
         }
-        /// <summary>
-        /// Read multiple DICOM file from a directory async
-        /// </summary>
-        /// <param name="pathArray">Directory path</param>
-        /// <returns></returns>
+
         public async Task<IEnumerable<Bitmap>> ImportDicomDir(string[] pathArray)
         {
             var maps = new List<Bitmap>();
@@ -85,12 +77,7 @@ namespace DicomLoader.Controller
             }
             return null;
         }
-        /// <summary>
-        /// Export the all image stored in the memory
-        /// </summary>
-        /// <param name="path">output directory</param>
-        /// <param name="images">Bitmap images in memory</param>
-        /// <returns></returns>
+
         public bool ExportDir(string path, IEnumerable<Bitmap> images)
         {
             foreach (var image in images.Select((value, index) => new { value, index }))
@@ -121,12 +108,7 @@ namespace DicomLoader.Controller
             }
             return true;
         }
-        /// <summary>
-        /// Export single DICOM image from memory
-        /// </summary>
-        /// <param name="path">output directory</param>
-        /// <param name="image">Bitmap image in memory</param>
-        /// <returns></returns>
+
         public bool ExportFile(string path, Bitmap image)
         {
             try 

@@ -134,7 +134,7 @@ using DicomLoaderWeb.Models;
             WriteLiteral("\r\n                    </td>\r\n                    <td class=\"align-middle\">");
             EndContext();
             BeginContext(1530, 137, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ffa5033abba242e788710ebb8aeecfaf", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "bcab493cc11445be93b55fa0da02a27b", async() => {
                 BeginContext(1642, 21, true);
                 WriteLiteral("Jelszó visszaállítása");
                 EndContext();
@@ -182,7 +182,7 @@ using DicomLoaderWeb.Models;
             WriteLiteral("                        <td class=\"align-middle\">");
             EndContext();
             BeginContext(1805, 134, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "ff309392e25b4bde81e372749faf8425", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7576f2fe61d0459d83e0dd9260e2be05", async() => {
                 BeginContext(1914, 21, true);
                 WriteLiteral("Általános jogosultság");
                 EndContext();
@@ -231,7 +231,7 @@ using DicomLoaderWeb.Models;
             WriteLiteral("                        <td class=\"align-middle\">");
             EndContext();
             BeginContext(2067, 130, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1aafc34c5965484c8921989f82382226", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "1a12c1c9ceb049a19d3db3f7a39e1866", async() => {
                 BeginContext(2176, 17, true);
                 WriteLiteral("Admin jogosultság");
                 EndContext();
@@ -287,7 +287,7 @@ using DicomLoaderWeb.Models;
             WriteLiteral("                        <td class=\"align-middle\">");
             EndContext();
             BeginContext(2363, 140, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "85f4f1330b754833be837866a2f0ea81", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "fdfb108842884131ad3b7f876dadf89c", async() => {
                 BeginContext(2473, 26, true);
                 WriteLiteral("Felhasználó felfüggesztése");
                 EndContext();
@@ -336,7 +336,7 @@ using DicomLoaderWeb.Models;
             WriteLiteral("                        <td class=\"align-middle\">");
             EndContext();
             BeginContext(2631, 136, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d54b3200404441e5ba65ba2c5bbbdb8a", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "7af31fedaf194366b6536304d9f017eb", async() => {
                 BeginContext(2741, 22, true);
                 WriteLiteral("Felhasználó aktiválása");
                 EndContext();

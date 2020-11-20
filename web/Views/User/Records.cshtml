@@ -1,0 +1,61 @@
+﻿@{
+    ViewBag.Title = "Rekordok";
+}
+@model IEnumerable<DicomLoaderWeb.Models.Record>
+    <!--Main-->
+
+<h1 class="h2 text-center text-light">Felvételek</h1>
+@for (var i = 0; i < Model.Count();)
+{
+<div class="card-deck my-5 container-fluid">
+    <div class="col-md-4">
+        <div class="card mx-0">
+            <img class="card-img-top" src="@Model.ElementAt(i).Image" height="400px">
+            <div class="card-body">
+                <h5 class="card-title">Név: @Model.ElementAt(i).PatientName</h5>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i).RecordDate </small><br />
+                <small class="text-muted">Feltöltő: @Model.ElementAt(i).User.LastName @Model.ElementAt(i).User.FirstName  </small>
+            </div>
+        </div>
+    </div>
+
+    @if (@Model.Count() > 1 && @Model.Count() > i + 1 )
+    {
+        <div class="col-md-4">
+            <div class="card mx-0">
+                <img class="card-img-top" src="@Model.ElementAt(i + 1).Image" height="400px">
+                <div class="card-body">
+                    <h5 class="card-title">Név: @Model.ElementAt(i + 1).PatientName</h5>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i + 1).RecordDate </small><br />
+                    <small class="text-muted">Feltöltő: @Model.ElementAt(i + 1).User.LastName @Model.ElementAt(i + 1).User.FirstName  </small>
+                </div>
+            </div>
+        </div>
+    }
+    @if (@Model.Count() > 2 && Model.Count() > i + 2 )
+    {
+        <div class="col-md-4">
+            <div class="card mx-0">
+                <img class="card-img-top" src="@Model.ElementAt(i + 2).Image" height="400px">
+                <div class="card-body">
+                    <h5 class="card-title">Név: @Model.ElementAt(i + 2).PatientName</h5>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i + 2).RecordDate </small><br />
+                    <small class="text-muted">Feltöltő: @Model.ElementAt(i + 2).User.LastName @Model.ElementAt(i + 2).User.FirstName  </small>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+
+    i += 3;
+}
+
+<!--/Main-->

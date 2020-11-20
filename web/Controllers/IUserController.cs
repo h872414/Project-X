@@ -23,6 +23,8 @@ namespace DicomLoaderWeb.Controllers
 
         public Task<IActionResult> UpdateRole(int id);
 
+        public Task<IActionResult> Records();
+
         public IActionResult Logout();
         
 
