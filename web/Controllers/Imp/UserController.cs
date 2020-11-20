@@ -50,8 +50,6 @@ namespace DicomLoaderWeb.Controllers
 
             if(PostUser.LastName == null || PostUser.FirstName == null || PostUser.Password == null || PostUser.Email == null)
             {
-                /*ViewBag.Error = "Hiba a bevitt adatokban";
-                return View(PostUser);*/
                 return RedirectToAction("Error", new Error { ErrorMessage = "Üresek a bevitt adatok" });
             }
 
@@ -147,8 +145,21 @@ namespace DicomLoaderWeb.Controllers
             return View(user);
         }
 
-        public IActionResult SignIn()
+        public async Task<IActionResult> SignIn()
         {
+            if(HttpContext.Session.GetString("_UId") != null)
+            {
+                try
+                {
+                    var Users = await _Context.Users.Where(x => x.ID == int.Parse(HttpContext.Session.GetString("_UId"))).ToArrayAsync();
+                    return RedirectToAction("License", Users[0]);
+                }
+                catch (Exception)
+                {
+                    return RedirectToAction("Error", new Error { ErrorMessage = "Adatbázis hiba" });
+                }
+                
+            }
             return View();
         }
         [HttpPost]
@@ -201,6 +212,7 @@ namespace DicomLoaderWeb.Controllers
         [Route("/logout")]
         public  IActionResult Logout() {
             HttpContext.Session.Remove("_User");
+            HttpContext.Session.Remove("_UId");
 
             return RedirectToAction("index");
 
@@ -235,7 +247,7 @@ namespace DicomLoaderWeb.Controllers
 
         public async Task<IActionResult> Records()
         {
-            var Id = Convert.ToInt32(HttpContext.Session.GetString("_UId"));
+            var Id = int.Parse(HttpContext.Session.GetString("_UId"));
 
 
             if (Id == 0) return RedirectToAction("Error", new Error { ErrorMessage = "Nem létező felhasználó" });

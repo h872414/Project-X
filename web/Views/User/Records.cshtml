@@ -4,48 +4,58 @@
 @model IEnumerable<DicomLoaderWeb.Models.Record>
     <!--Main-->
 
-
-    @for (var i= 0; i < Model.Count();) { 
+<h1 class="h2 text-center text-light">Felvételek</h1>
+@for (var i = 0; i < Model.Count();)
+{
 <div class="card-deck my-5 container-fluid">
-    <div class="card col-4">
-        <img class="card-img-top" src="@Model.ElementAt(i).Image" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Megjegyzés</h5>
-            <p class="card-text">@Model.ElementAt(i).Image</p>
-        </div>
-        <div class="card-footer">
-            <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i).RecordDate </small>
-            <small class="text-muted">Feltöltés ideje: @Model.Count() </small>
-           
-        </div>
-    </div>
-    <div class="card col-4">
-        <img class="card-img-top" src="data:image/png;base64, iVBORw0KGgoAAAANSUhEUgAAAAUAAAAFCAYAAACNbyblAAAAHElEQVQI12P4//8/w38GIAXDIBKE0DHxgljNBAAO 9TXL0Y4OHwAAAABJRU5ErkJggg==" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Megjegyzés</h5>
-            <p class="card-text">@Model.ElementAt(i).Description</p>
-        </div>
-        <div class="card-footer">
-            <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i).RecordDate </small>
-            <small class="text-muted">Feltöltés ideje: @Model.Count() </small>
-            <small class="text-muted">Feltöltés ideje: @i </small>
+    <div class="col-md-4">
+        <div class="card mx-0">
+            <img class="card-img-top" src="@Model.ElementAt(i).Image" height="400px">
+            <div class="card-body">
+                <h5 class="card-title">Név: @Model.ElementAt(i).PatientName</h5>
+            </div>
+            <div class="card-footer">
+                <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i).RecordDate </small><br />
+                <small class="text-muted">Feltöltő: @Model.ElementAt(i).User.LastName @Model.ElementAt(i).User.FirstName  </small>
+            </div>
         </div>
     </div>
-    <div class="card col-4">
-        <img class="card-img-top" src=".../100px180/" alt="Card image cap">
-        <div class="card-body">
-            <h5 class="card-title">Megjegyzés</h5>
-            <p class="card-text">@Model.ElementAt(i).Description</p>
+
+    @if (@Model.Count() > 1 && @Model.Count() > i + 1 )
+    {
+        <div class="col-md-4">
+            <div class="card mx-0">
+                <img class="card-img-top" src="@Model.ElementAt(i + 1).Image" height="400px">
+                <div class="card-body">
+                    <h5 class="card-title">Név: @Model.ElementAt(i + 1).PatientName</h5>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i + 1).RecordDate </small><br />
+                    <small class="text-muted">Feltöltő: @Model.ElementAt(i + 1).User.LastName @Model.ElementAt(i + 1).User.FirstName  </small>
+                </div>
+            </div>
         </div>
-        <div class="card-footer">
-            <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i).RecordDate </small>
-            <small class="text-muted">Feltöltés ideje: @Model.Count() </small>
-            <small class="text-muted">Feltöltés ideje: @i </small>
+    }
+    @if (@Model.Count() > 2 && Model.Count() > i + 2 )
+    {
+        <div class="col-md-4">
+            <div class="card mx-0">
+                <img class="card-img-top" src="@Model.ElementAt(i + 2).Image" height="400px">
+                <div class="card-body">
+                    <h5 class="card-title">Név: @Model.ElementAt(i + 2).PatientName</h5>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Feltöltés ideje: @Model.ElementAt(i + 2).RecordDate </small><br />
+                    <small class="text-muted">Feltöltő: @Model.ElementAt(i + 2).User.LastName @Model.ElementAt(i + 2).User.FirstName  </small>
+                </div>
+            </div>
         </div>
-    </div>
+    }
+
 </div>
 
-        i += 3;
-    }
+
+    i += 3;
+}
 
 <!--/Main-->

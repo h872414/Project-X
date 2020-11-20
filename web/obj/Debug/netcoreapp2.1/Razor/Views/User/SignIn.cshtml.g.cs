@@ -63,7 +63,7 @@ using DicomLoaderWeb.Models;
             WriteLiteral("\r\n\r\n\r\n<!--Main-->\r\n");
             EndContext();
             BeginContext(64, 582, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "2885d6414f1d4ca9b701944b4ca08ae9", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "71495451375546e89c9ba1b4c5a76829", async() => {
                 BeginContext(160, 479, true);
                 WriteLiteral(@"
     <h1 class=""h2 text-center"">License ellenőrzése</h1>

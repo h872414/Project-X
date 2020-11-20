@@ -73,7 +73,8 @@ namespace DicomLoader.View
                     const string caption = "Kapcsolat hiba";
                     MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-                
+                DicomImage = "data:image/png;base64, ";
+
             }
             
         }
