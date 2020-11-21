@@ -3,6 +3,7 @@ using System;
 using DicomLoaderWeb.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DicomLoaderWeb.Migrations
@@ -14,12 +15,15 @@ namespace DicomLoaderWeb.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113");
+                .HasAnnotation("ProductVersion", "2.1.14-servicing-32113")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("DicomLoaderWeb.Models.Record", b =>
                 {
                     b.Property<int>("RecordId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Description")
                         .IsRequired();
@@ -45,7 +49,10 @@ namespace DicomLoaderWeb.Migrations
             modelBuilder.Entity("DicomLoaderWeb.Models.Role", b =>
                 {
                     b.Property<int>("RoleId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("RoleName");
 
                     b.Property<int>("UserRole");
 
@@ -57,7 +64,10 @@ namespace DicomLoaderWeb.Migrations
             modelBuilder.Entity("DicomLoaderWeb.Models.Status", b =>
                 {
                     b.Property<int>("StatusID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("StatusName");
 
                     b.Property<int>("UserStatus");
 
@@ -69,7 +79,8 @@ namespace DicomLoaderWeb.Migrations
             modelBuilder.Entity("DicomLoaderWeb.Models.User", b =>
                 {
                     b.Property<int>("ID")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Email")
                         .IsRequired();
@@ -87,8 +98,7 @@ namespace DicomLoaderWeb.Migrations
 
                     b.Property<int>("Role");
 
-                    b.Property<string>("Salt")
-                        .IsRequired();
+                    b.Property<string>("Salt");
 
                     b.Property<int>("Status");
 

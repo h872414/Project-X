@@ -47,7 +47,6 @@ C:\Users\KT\source\repos\alkfejk\Project-X\web\bin\Release\netcoreapp2.1\DicomLo
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLoaderWeb.csprojAssemblyReference.cache
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLoaderWeb.AssemblyInfoInputs.cache
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLoaderWeb.AssemblyInfo.cs
-C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLoaderWeb.csproj.CoreCompileInputs.cache
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLoaderWeb.RazorAssemblyInfo.cache
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLoaderWeb.RazorAssemblyInfo.cs
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLoaderWeb.TagHelpers.input.cache
@@ -71,3 +70,10 @@ C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLo
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLoaderWeb.pdb
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLoaderWeb.genruntimeconfig.cache
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLoaderWeb.csproj.CopyComplete
+C:\Users\KT\Source\Repos\alkfejk\Project-X\web\bin\Release\netcoreapp2.1\Properties\ServiceDependencies\DicomLoaderWeb20201120211629 - Web Deploy\profile.arm.json
+C:\Users\KT\Source\Repos\alkfejk\Project-X\web\bin\Release\netcoreapp2.1\Properties\serviceDependencies.DicomLoaderWeb20201120211629 - Web Deploy.json
+C:\Users\KT\Source\Repos\alkfejk\Project-X\web\bin\Release\netcoreapp2.1\Properties\serviceDependencies.json
+C:\Users\KT\Source\Repos\alkfejk\Project-X\web\bin\Release\netcoreapp2.1\Properties\ServiceDependencies\DicomLoaderWeb20201120211629 - Web Deploy\mssql1.arm.json
+C:\Users\KT\Source\Repos\alkfejk\Project-X\web\bin\Release\netcoreapp2.1\Properties\serviceDependencies.local.json
+C:\Users\KT\Source\Repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\DicomLoaderWeb.csproj.CoreCompileInputs.cache
+C:\Users\KT\Source\Repos\alkfejk\Project-X\web\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
