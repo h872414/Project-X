@@ -1,9 +1,10 @@
 ﻿using System;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DicomLoaderWeb.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,7 +13,7 @@ namespace DicomLoaderWeb.Migrations
                 columns: table => new
                 {
                     RoleId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserRole = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -25,7 +26,7 @@ namespace DicomLoaderWeb.Migrations
                 columns: table => new
                 {
                     StatusID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     UserStatus = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -38,11 +39,11 @@ namespace DicomLoaderWeb.Migrations
                 columns: table => new
                 {
                     ID = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     FirstName = table.Column<string>(nullable: false),
                     LastName = table.Column<string>(nullable: false),
                     Password = table.Column<string>(nullable: false),
-                    Salt = table.Column<string>(nullable: false),
+                    Salt = table.Column<string>(nullable: true),
                     Email = table.Column<string>(nullable: false),
                     Role = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
@@ -58,7 +59,7 @@ namespace DicomLoaderWeb.Migrations
                 columns: table => new
                 {
                     RecordId = table.Column<int>(nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     ID = table.Column<int>(nullable: false),
                     PatientName = table.Column<string>(nullable: false),
                     Image = table.Column<string>(nullable: false),

@@ -17,5 +17,7 @@ namespace DicomLoaderWeb.Models
         public int StatusID { get; set; }
         [Required]
         public UserStatus UserStatus { get; set; }
+
+        public String StatusName { get; set; }
     }
 }

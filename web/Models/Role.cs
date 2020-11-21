@@ -18,5 +18,6 @@ namespace DicomLoaderWeb.Models
         [Required]
         public UserRole UserRole { get; set; }
 
+        public String RoleName { get; set; }
     }
 }

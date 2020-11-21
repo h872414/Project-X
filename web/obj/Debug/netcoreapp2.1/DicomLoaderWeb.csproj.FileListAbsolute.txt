@@ -143,3 +143,4 @@ C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Debug\netcoreapp2.1\DicomLoad
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Debug\netcoreapp2.1\DicomLoaderWeb.genruntimeconfig.cache
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Debug\netcoreapp2.1\DicomLoaderWeb.csproj.CopyComplete
 C:\Users\KT\source\repos\alkfejk\Project-X\web\obj\Debug\netcoreapp2.1\Razor\Views\User\Records.cshtml.g.cs
+C:\Users\KT\Source\Repos\alkfejk\Project-X\web\bin\Debug\netcoreapp2.1\Properties\ServiceDependencies\DicomLoaderWeb20201120211629 - Web Deploy\profile.arm.json

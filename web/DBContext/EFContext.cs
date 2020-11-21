@@ -14,7 +14,7 @@ namespace DicomLoaderWeb.DBContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlite("Data Source=.//DB//users.db");
+            optionsBuilder.UseSqlServer("Server=tcp:dicomloaderwebdbserver.database.windows.net,1433;Initial Catalog=DicomLoaderWeb_db;Persist Security Info=False;User ID=sqladmin;Password=Dereske77;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
         }
     }
 }
