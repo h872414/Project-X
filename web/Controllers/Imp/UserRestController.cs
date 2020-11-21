@@ -51,7 +51,7 @@ namespace DicomLoaderWeb.Controllers.Imp
 
         //Handle HTTP request from desktop App
         [HttpPost]
-        [Route("/SignIn")]
+        [Route("/SignInDesktop")]
         public async Task<ActionResult> GetData(String Email, String Password)
         {
             User user = null;
