@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using DicomLoader.Controller;
+using DicomLoader.Model;
 
 namespace DicomLoader.View
 {
@@ -25,8 +27,9 @@ namespace DicomLoader.View
             ReSet();
             this.controller = new DicomController();
             this.UserEmail = email;
-           
         }
+
+       
 
         private async void ImportDirBtnClick(object sender, EventArgs e)
         {         

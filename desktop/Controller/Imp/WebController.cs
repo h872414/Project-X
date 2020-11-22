@@ -7,6 +7,8 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using DicomLoader.Model;
+using DicomLoader.Model.DAO;
 
 using Newtonsoft.Json;
 
@@ -15,6 +17,7 @@ namespace DicomLoader.Controller
     class WebController : IWebController
     {
         private static readonly HttpClient client = new HttpClient();
+        private static readonly RecordDao dao = new RecordDao();
         public async Task<bool> SignIn(string email, string password)
         {
             String responseBody = null;
@@ -85,6 +88,16 @@ namespace DicomLoader.Controller
             try
             {
                 response.EnsureSuccessStatusCode();
+                Record LocalRecord = new Record
+                {
+                    Email = Email,
+                    PatientName = PatientName,
+                    Image = DicomImage,
+                    Description = Description,
+                    RecordDate = RecordDate
+                };
+
+                await SaveLocal(LocalRecord);
                 return true;
             }
             catch (HttpRequestException exception)
@@ -99,5 +112,23 @@ namespace DicomLoader.Controller
 
 
         }
+        private static async Task<Record> SaveLocal(Record Record)
+        {
+            Record testRecord = new Record
+            {
+                Email = "alkhjsdf",
+                Description = "asjfdélk",
+                Image = " LJKSDHFA,",
+                PatientName = "aéjsdhf",
+                RecordDate = DateTime.Today
+            };
+
+            Record resultRecord = await dao.AddRecord(testRecord);
+            Console.WriteLine(testRecord.Description);
+
+            return null;
+        }
     }
+
+    
 }

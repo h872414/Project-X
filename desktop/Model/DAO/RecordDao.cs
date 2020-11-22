@@ -19,23 +19,27 @@ namespace DicomLoader.Model.DAO
             {
                 return null;
             }
-
-            using (SQLiteConnection db = new SQLiteConnection(s_connectionString))
-            using(SQLiteCommand Command = db.CreateCommand())
+            int AffectedRows = 0;
+            await Task.Run(() =>
             {
-                Command.CommandText = "INSERT INTO RECORDS (Email,PatientName,Image,Description,RecordDate) " +
-                    "VALUES(@Email, @PatintName, @Image, @Description, @RecordDate);";
+                using (SQLiteConnection db = new SQLiteConnection(s_connectionString))
+                using (SQLiteCommand Command = db.CreateCommand())
+                {
+                    db.Open();
+                    Command.CommandText = "INSERT INTO Records(Email,PatientName,Image,Description,RecordDate) " +
+                        "VALUES(@Email, @PatientName, @Image, @Description, @RecordDate);";
 
-                Command.Parameters.Add("Email", DbType.String).Value = Record.Email;
-                Command.Parameters.Add("PatientName", DbType.String).Value = Record.PatientName;
-                Command.Parameters.Add("Image", DbType.String).Value = Record.Image;
-                Command.Parameters.Add("Description", DbType.String).Value = Record.Description;
-                Command.Parameters.Add("RecordDate", DbType.Date).Value = Record.RecordDate;
+                    Command.Parameters.Add("Email", DbType.String).Value = Record.Email;
+                    Command.Parameters.Add("PatientName", DbType.String).Value = Record.PatientName;
+                    Command.Parameters.Add("Image", DbType.String).Value = Record.Image;
+                    Command.Parameters.Add("Description", DbType.String).Value = Record.Description;
+                    Command.Parameters.Add("RecordDate", DbType.Date).Value = Record.RecordDate;
 
-                int affectedRows = Command.ExecuteNonQuery();
-                if (affectedRows != 1) return null;
-            }
-            return Record;
+                    int affectedRows = Command.ExecuteNonQuery();
+                }
+            });
+
+            return AffectedRows != 1 ? null : Record;
         }
 
         public IList<Record> ListRecord()

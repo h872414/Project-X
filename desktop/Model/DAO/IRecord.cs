@@ -11,5 +11,6 @@ namespace DicomLoader.Model.DAO
     {
         public Task<Record> AddRecord(Record Record);
         public IList<Record> ListRecord();
+        
     }
 }
