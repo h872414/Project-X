@@ -22,7 +22,7 @@ namespace DicomLoader.Model.DAO
                 using SQLiteConnection db = new SQLiteConnection(s_connectionString);
                 using SQLiteCommand Command = db.CreateCommand();
                 db.Open();
-                Command.CommandText = "CREATE TABLE Records ( " +
+                Command.CommandText = "CREATE TABLE IF NOT EXISTS Records ( " +
                     "RecordId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                     "Email VARCHAR(250) NOT NULL," +
                     "PatientName VARCHAR(250) NOT NULL," +

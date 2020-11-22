@@ -63,7 +63,7 @@ using DicomLoaderWeb.Models;
             WriteLiteral("\r\n<!--Main-->\r\n");
             EndContext();
             BeginContext(94, 1143, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "156b5d6b2f9149d0b6533131c40b5af7", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5dea69b0beab424c938d4c85ad80195f", async() => {
                 BeginContext(196, 882, true);
                 WriteLiteral(@"
     <h1 class=""h2 text-center"">Regisztráció</h1>
