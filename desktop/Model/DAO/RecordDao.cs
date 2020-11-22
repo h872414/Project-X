@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,7 +13,25 @@ namespace DicomLoader.Model.DAO
 {
     class RecordDao : IRecord
     {
-        private static readonly string s_connectionString = @"Data Source=..\..\DB\tmp.db;";
+        private static readonly string s_connectionString = @"Data Source=.\tmp.db;";
+
+        public RecordDao()
+        {
+            if (!File.Exists(s_connectionString))
+            {
+                using SQLiteConnection db = new SQLiteConnection(s_connectionString);
+                using SQLiteCommand Command = db.CreateCommand();
+                db.Open();
+                Command.CommandText = "CREATE TABLE Records ( " +
+                    "RecordId INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                    "Email VARCHAR(250) NOT NULL," +
+                    "PatientName VARCHAR(250) NOT NULL," +
+                    "Image TEXT NOT NULL," +
+                    "Description TEXT," +
+                    "RecordDate  DATE);";
+                Command.ExecuteNonQuery();
+            }
+        }
         public async Task<Record> AddRecord(Record Record)
         {
             if(Record == null)
@@ -52,7 +71,7 @@ namespace DicomLoader.Model.DAO
                 using(SQLiteCommand Command = db.CreateCommand())
                 {
                     db.Open();
-                    Command.CommandText = "DELETE FROM RECORDS WHERE RecordId = @RecordId";
+                    Command.CommandText = "DELETE FROM Records WHERE RecordId = @RecordId";
                     Command.Parameters.Add("RecordId", DbType.Int32).Value = Record.RecordId;
                     Command.ExecuteNonQuery();
                 }
@@ -69,7 +88,7 @@ namespace DicomLoader.Model.DAO
                 using (SQLiteConnection db = new SQLiteConnection(s_connectionString))
                 using (SQLiteCommand Command = db.CreateCommand())
                 {
-                    Command.CommandText = "SELECT * FROM RECORDS";
+                    Command.CommandText = "SELECT * FROM Records";
                     db.Open();
 
                     using (SQLiteDataReader reader = Command.ExecuteReader())
