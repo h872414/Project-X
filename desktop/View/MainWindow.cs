@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using DicomLoader.Controller;
+using DicomLoader.Model;
 
 namespace DicomLoader.View
 {
@@ -13,6 +15,7 @@ namespace DicomLoader.View
     public partial class MainWindow : Form
     {
         readonly IDicomController controller;
+        readonly static IWebController WController = new WebController();
         IEnumerable<Bitmap> images;
         Bitmap singlePicture;
         int currentImage = 0;
@@ -25,7 +28,28 @@ namespace DicomLoader.View
             ReSet();
             this.controller = new DicomController();
             this.UserEmail = email;
-           
+            init();
+        }
+
+        private static void init()
+        {
+            Task.Run(async () => {
+                var RecordsStored = await WebController.CheckLocalDB();
+                foreach(var Record in RecordsStored)
+                {
+                    String PatientName = Record.PatientName;
+                    String Description = Record.Description;
+                    String UserEmail = Record.Email;
+                    String DicomImage = Record.Image;
+                    DateTime RecordDate = Record.RecordDate;
+
+                    if(await WController.Upload(UserEmail, PatientName, DicomImage, Description, RecordDate)) {
+                        await WebController.DeleteRecord(Record);
+                    }
+
+                }
+
+            });
         }
 
         private async void ImportDirBtnClick(object sender, EventArgs e)
@@ -208,5 +232,6 @@ namespace DicomLoader.View
         {
             new UploadWindow(UserEmail).Show();
         }
-    }
+
+     }
 }

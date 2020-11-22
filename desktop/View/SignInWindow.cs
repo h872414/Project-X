@@ -1,20 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using DicomLoader.Controller;
+using DicomLoader.Model;
+using DicomLoader.Model.DAO;
 
 namespace DicomLoader.View
 {
     public partial class SignInWindow : Form
     {
         readonly IWebController controller = new WebController();
+       
         public SignInWindow()
         {
             InitializeComponent();
+
         }
+
 
         private void RegButton_Click(object sender, EventArgs e)
         {
