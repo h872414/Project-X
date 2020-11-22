@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using DicomLoader.Controller;
+using DicomLoader.Model.DAO;
 
 namespace DicomLoader.View
 {
@@ -14,6 +15,8 @@ namespace DicomLoader.View
         public SignInWindow()
         {
             InitializeComponent();
+            RecordDao test = new RecordDao();
+            test.ListRecord();
         }
 
         private void RegButton_Click(object sender, EventArgs e)

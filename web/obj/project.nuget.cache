@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8HbISek1JAi/xxnrRuJyWkCm8s3PqXkLQtD0iaXpq5dGMtimCwqkgFWKKowZCVL6IjXNpb8OdAxOX/ln1pYojQ==",
+  "dgSpecHash": "emQ8Jsv73KsBCDqO2a0SrOuQDDV0HYF/zsTzNh2Z+2Pd+dh9m0EAIU5vxXnb1Fbu24I5ftnGCaApN8CMyIBLAg==",
   "success": true,
-  "projectFilePath": "C:\\Users\\KT\\source\\repos\\alkfejk\\Project-X\\web\\DicomLoaderWeb.csproj",
+  "projectFilePath": "C:\\Users\\KT\\Source\\Repos\\alkfejk\\Project-X\\web\\DicomLoaderWeb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\KT\\.nuget\\packages\\fo-dicom.desktop\\4.0.6\\fo-dicom.desktop.4.0.6.nupkg.sha512",
     "C:\\Users\\KT\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.6\\microsoft.aspnet.webapi.client.5.2.6.nupkg.sha512",
