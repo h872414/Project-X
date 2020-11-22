@@ -10,7 +10,8 @@ namespace DicomLoader.Model.DAO
     interface IRecord
     {
         public Task<Record> AddRecord(Record Record);
-        public IList<Record> ListRecord();
+        public Task<IList<Record>> ListRecord();
+        public Task<Record> DeleteRecord(Record Record);
         
     }
 }

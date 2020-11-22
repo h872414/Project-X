@@ -117,10 +117,11 @@
             // 
             // UploadButton
             // 
+            this.UploadButton.Enabled = false;
             this.UploadButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.UploadButton.Location = new System.Drawing.Point(411, 373);
+            this.UploadButton.Location = new System.Drawing.Point(497, 310);
             this.UploadButton.Name = "UploadButton";
-            this.UploadButton.Size = new System.Drawing.Size(116, 36);
+            this.UploadButton.Size = new System.Drawing.Size(138, 36);
             this.UploadButton.TabIndex = 8;
             this.UploadButton.Text = "Feltöltés";
             this.UploadButton.UseVisualStyleBackColor = true;
@@ -140,6 +141,9 @@
             this.Controls.Add(this.CommitLabel);
             this.Controls.Add(this.DateLabel);
             this.Controls.Add(this.NameLabel);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "UploadWindow";
             this.Text = "UploadWindow";
             this.ResumeLayout(false);

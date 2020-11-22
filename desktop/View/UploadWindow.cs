@@ -41,6 +41,7 @@ namespace DicomLoader.View
                 {
                     byte[] imageArray = File.ReadAllBytes(Result.FileName);
                     DicomImage += Convert.ToBase64String(imageArray);
+                    UploadButton.Enabled = true;
                 }catch(Exception exception)
                 {
                     Debug.WriteLine(exception.ToString());
@@ -65,7 +66,7 @@ namespace DicomLoader.View
                 {
                     const string message = "Sikeresen felöltötte a file-t";
                     const string caption = "Sikeres művelet";
-                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information); 
                 }
                 else
                 {
@@ -74,6 +75,7 @@ namespace DicomLoader.View
                     MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 DicomImage = "data:image/png;base64, ";
+                this.Close();
 
             }
             

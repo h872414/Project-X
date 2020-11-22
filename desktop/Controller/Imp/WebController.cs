@@ -23,8 +23,19 @@ namespace DicomLoader.Controller
             String responseBody = null;
             var parameters = new Dictionary<string, string> { { "Email", email}, { "Password", password } };
             var encodedContent = new FormUrlEncodedContent(parameters);
-            
-            using var response = await client.PostAsync(ConfigurationManager.AppSettings["SignInURL"],encodedContent);
+            var result =  client.PostAsync(ConfigurationManager.AppSettings["SignInURL"], encodedContent); ;
+            HttpResponseMessage response = null;
+            try
+            {
+                response = await result;
+            }catch(Exception exception)
+            {
+                Debug.WriteLine(exception.ToString());
+                const string message = "Server hiba";
+                const string caption = "A Server nem elérhető, kérem ellenőrizze a kapcsolatás";
+                MessageBox.Show(caption, message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
             
             try
             {
@@ -82,12 +93,24 @@ namespace DicomLoader.Controller
                 { "Date", RecordDate.ToString() }
             };
             var encodedContent = new FormUrlEncodedContent(parameters);
-
-            using var response = await client.PostAsync(ConfigurationManager.AppSettings["UploadURL"], encodedContent);
-
+            HttpResponseMessage response = null;
+            
             try
             {
-                response.EnsureSuccessStatusCode();
+                response = await client.PostAsync(ConfigurationManager.AppSettings["UploadURL"], encodedContent);
+                if (response != null)
+                {
+                    response.EnsureSuccessStatusCode();
+                    return true;
+                }
+            }
+            catch(Exception exception)
+            {
+                Debug.WriteLine(exception.ToString());
+                Debug.WriteLine("Status Code: " + response.StatusCode);
+                const string message = "Hiba a feltöltés közben";
+                string caption = "Ellenőrizze a kapcsolatás";
+                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Record LocalRecord = new Record
                 {
                     Email = Email,
@@ -96,38 +119,23 @@ namespace DicomLoader.Controller
                     Description = Description,
                     RecordDate = RecordDate
                 };
-
-                await SaveLocal(LocalRecord);
-                return true;
+                await dao.AddRecord(LocalRecord);
             }
-            catch (HttpRequestException exception)
-            {
-                Debug.WriteLine(exception.ToString());
-                Debug.WriteLine("Status Code: " + response.StatusCode);
-                const string message = "Hiba a feltöltés közben";
-                string caption = "Ellenőrizze a kapcsolatás \n" + response.StatusCode + " hiba";
-                MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return false;
-            }
-
+            return false;
 
         }
-        private static async Task<Record> SaveLocal(Record Record)
+
+        public static async Task<IList<Record>> CheckLocalDB()
         {
-            Record testRecord = new Record
-            {
-                Email = "alkhjsdf",
-                Description = "asjfdélk",
-                Image = " LJKSDHFA,",
-                PatientName = "aéjsdhf",
-                RecordDate = DateTime.Today
-            };
-
-            Record resultRecord = await dao.AddRecord(testRecord);
-            Console.WriteLine(testRecord.Description);
-
-            return null;
+           return await dao.ListRecord();
         }
+
+        public static async Task DeleteRecord(Record Record)
+        {
+            await dao.DeleteRecord(Record);
+        }
+
+
     }
 
     

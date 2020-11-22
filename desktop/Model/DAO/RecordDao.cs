@@ -35,27 +35,50 @@ namespace DicomLoader.Model.DAO
                     Command.Parameters.Add("Description", DbType.String).Value = Record.Description;
                     Command.Parameters.Add("RecordDate", DbType.Date).Value = Record.RecordDate;
 
-                    int affectedRows = Command.ExecuteNonQuery();
+                    AffectedRows = Command.ExecuteNonQuery();
                 }
             });
 
             return AffectedRows != 1 ? null : Record;
         }
 
-        public IList<Record> ListRecord()
+        public async Task<Record> DeleteRecord(Record Record)
+        {
+            int Affectedrows = 0;
+            await Task.Run(() => 
+            {
+                
+                using (SQLiteConnection db = new SQLiteConnection(s_connectionString))
+                using(SQLiteCommand Command = db.CreateCommand())
+                {
+                    db.Open();
+                    Command.CommandText = "DELETE FROM RECORDS WHERE RecordId = @RecordId";
+                    Command.Parameters.Add("RecordId", DbType.Int32).Value = Record.RecordId;
+                    Command.ExecuteNonQuery();
+                }
+            });
+            return Affectedrows != 1 ? null : Record;
+        }
+
+        public async Task<IList<Record>> ListRecord()
         {
             IList<Record> Records = null;
-            using (SQLiteConnection db = new SQLiteConnection(s_connectionString)) 
-            using(SQLiteCommand Command = db.CreateCommand())
+            await Task.Run(() =>
             {
-                Command.CommandText = "SELECT * FROM RECORDS";
-                db.Open();
 
-                using (SQLiteDataReader reader = Command.ExecuteReader())
+                using (SQLiteConnection db = new SQLiteConnection(s_connectionString))
+                using (SQLiteCommand Command = db.CreateCommand())
                 {
-                    Records = ReadRecordsFromReader(reader);
+                    Command.CommandText = "SELECT * FROM RECORDS";
+                    db.Open();
+
+                    using (SQLiteDataReader reader = Command.ExecuteReader())
+                    {
+                        Records = ReadRecordsFromReader(reader);
+                    }
                 }
-            }
+            });
+           
             return Records;
             
         }
