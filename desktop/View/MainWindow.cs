@@ -232,5 +232,6 @@ namespace DicomLoader.View
         {
             new UploadWindow(UserEmail).Show();
         }
-    }
+
+     }
 }

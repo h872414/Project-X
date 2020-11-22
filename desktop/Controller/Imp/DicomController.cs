@@ -42,7 +42,7 @@ namespace DicomLoader.Controller
                 Bitmap bmp = new Bitmap(outStream);
                 return bmp;
             }
-            return null;
+    
 
         }
 
@@ -52,6 +52,7 @@ namespace DicomLoader.Controller
             DicomImage image = null;
             WriteableBitmap renderImage = null;
             ImageManager.SetImplementation(WPFImageManager.Instance);
+            
             try
             {
                 foreach (var path in pathArray)

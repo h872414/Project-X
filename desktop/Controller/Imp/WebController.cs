@@ -84,7 +84,7 @@ namespace DicomLoader.Controller
 
         public async Task<bool> Upload(string Email, string PatientName, string DicomImage, string Description, DateTime RecordDate)
         {
-            String responseBody = null;
+    
             var parameters = new Dictionary<string, string> { 
                 { "Email", Email }, 
                 { "DicomImage", DicomImage },
