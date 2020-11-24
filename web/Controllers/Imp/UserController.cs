@@ -1,18 +1,13 @@
 ﻿using System;
-
 using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
-
 using DicomLoaderWeb.DBContext;
 using DicomLoaderWeb.Models;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http2.HPack;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace DicomLoaderWeb.Controllers
 {
@@ -21,11 +16,14 @@ namespace DicomLoaderWeb.Controllers
         private readonly EFContext _Context = new EFContext();
 
         public IActionResult Index()
-        {
-            
+        {           
             return View();
         }
 
+        /// <summary>
+        /// List the registered users if the requester is an admin
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Users()
         {
             if(HttpContext.Session.GetString("_User") == UserRole.USER.ToString())
@@ -33,26 +31,30 @@ namespace DicomLoaderWeb.Controllers
                 return Redirect("index");
             }
             var users = await _Context.Users.ToArrayAsync();
-
             return View(users);
         }
-
+        /// <summary>
+        /// Load registration page
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Registration()
         {
             User user = new User();
             return View(user);
         }
-
+        /// <summary>
+        /// Handles post request of the registration
+        /// </summary>
+        /// <param name="PostUser">user to be registered</param>
+        /// <returns></returns>
         [HttpPost]
         [AutoValidateAntiforgeryToken]
         public async Task<IActionResult> Registration(User PostUser)
         {
-
             if(PostUser.LastName == null || PostUser.FirstName == null || PostUser.Password == null || PostUser.Email == null)
             {
                 return RedirectToAction("Error", new Error { ErrorMessage = "Üresek a bevitt adatok" });
             }
-
             if(_Context.Users.Where(x => x.Email == PostUser.Email).Any())
             {
                 return RedirectToAction("Error", new Error { ErrorMessage = "A megadott email címmel már regisztráltak" });
@@ -76,10 +78,13 @@ namespace DicomLoaderWeb.Controllers
                 await _Context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
             return View();
         }
-
+        /// <summary>
+        /// Reset the password of the user to "321"
+        /// </summary>
+        /// <param name="id">users's id, whose password should be reseted</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("/ResetPassword/{id:int}")]
         public async Task<IActionResult> ResetPassword(int id)
@@ -101,6 +106,12 @@ namespace DicomLoaderWeb.Controllers
             }
 
         }
+
+        /// <summary>
+        /// Change to role of the user to admin or user
+        /// </summary>
+        /// <param name="id">user whose role needs to be updated</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("/UpdateRole/{id:int}")]
         public async Task<IActionResult> UpdateRole(int id)
@@ -121,6 +132,11 @@ namespace DicomLoaderWeb.Controllers
             }
         }
 
+        /// <summary>
+        /// Change the state of the user between ACTIVE and DISABLED
+        /// </summary>
+        /// <param name="id">user whose state needs to be updated</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("/UpdateState/{id:int}")]
         public async Task<IActionResult> UpdateState(int id)
@@ -140,11 +156,20 @@ namespace DicomLoaderWeb.Controllers
                 return RedirectToAction("Error", new Error { ErrorMessage = "Hiba státusz változása közben" });
             }
         }
+        /// <summary>
+        /// Load the license page
+        /// </summary>
+        /// <param name="user">user whose license state is displayed</param>
+        /// <returns></returns>
         public IActionResult License(User user)
         {
             return View(user);
         }
 
+        /// <summary>
+        /// Load sign in window
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> SignIn()
         {
             if(HttpContext.Session.GetString("_UId") != null)
@@ -162,6 +187,13 @@ namespace DicomLoaderWeb.Controllers
             }
             return View();
         }
+
+        /// <summary>
+        /// Handles sign in post request
+        /// </summary>
+        /// <param name="Email">user's email</param>
+        /// <param name="Password">user's password</param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> SignIn(String Email, String Password)
         {
@@ -203,20 +235,28 @@ namespace DicomLoaderWeb.Controllers
                 }
                
             }
-
             var error = new Error { ErrorMessage = "Hibás bejelentkezési adatok" };
             return RedirectToAction("Error", error);
         }
 
+        /// <summary>
+        /// Handles logout request
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         [Route("/logout")]
         public  IActionResult Logout() {
             HttpContext.Session.Remove("_User");
             HttpContext.Session.Remove("_UId");
-
             return RedirectToAction("index");
-
         }
+
+        /// <summary>
+        /// Hash the password
+        /// </summary>
+        /// <param name="Salt">the salt which is used during hash</param>
+        /// <param name="Password">password to be hashed</param>
+        /// <returns>Hashed password</returns>
         static private String HashPassword(byte[] Salt, String Password)
         {
             string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
@@ -227,29 +267,37 @@ namespace DicomLoaderWeb.Controllers
                 numBytesRequested: 256 / 8));
             return hashed;
         }
+        /// <summary>
+        /// Check if the password match with the hashed password
+        /// </summary>
+        /// <param name="Salt">the salt which is used during hash</param>
+        /// <param name="PasswordStored">hashed password</param>
+        /// <param name="PasswordInput">password needs to be checked</param>
+        /// <returns></returns>
         public static Boolean CheckPassword(String Salt, String PasswordStored, String PasswordInput)
         {
-
             String hashed = HashPassword(Convert.FromBase64String(Salt), PasswordInput);
-            if (PasswordStored.Equals(hashed))
-            {
-                return true;
-            }
-
+            if (PasswordStored.Equals(hashed)) return true;
             return false;
         }
 
+        /// <summary>
+        /// Load error page
+        /// </summary>
+        /// <param name="error">Erros message</param>
+        /// <returns></returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error(Error error)
         {
             return View(error);
         }
-
+        /// <summary>
+        /// List the records of the users
+        /// </summary>
+        /// <returns></returns>
         public async Task<IActionResult> Records()
         {
             var Id = int.Parse(HttpContext.Session.GetString("_UId"));
-
-
             if (Id == 0) return RedirectToAction("Error", new Error { ErrorMessage = "Nem létező felhasználó" });
 
             try
@@ -266,11 +314,8 @@ namespace DicomLoaderWeb.Controllers
             }
             catch (Exception)
             {
-
+                return RedirectToAction("Error", new Error { ErrorMessage = "Hibás bejelentkezési adatok" });
             }
-
-            return View();
-            throw new NotImplementedException();
         }
     }
 }

@@ -100,10 +100,6 @@
             "System.ComponentModel.Annotations": {
               "target": "Package",
               "version": "[4.7.0, )"
-            },
-            "fo-dicom.Desktop": {
-              "target": "Package",
-              "version": "[4.0.6, )"
             }
           },
           "imports": [

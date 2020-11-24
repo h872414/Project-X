@@ -235,7 +235,7 @@ namespace DicomLoader.View
             this.exportBtn.TabIndex = 8;
             this.exportBtn.Text = "Exportálás";
             this.exportBtn.UseVisualStyleBackColor = true;
-            this.exportBtn.Click += new System.EventHandler(this.exportBtn_Click);
+            this.exportBtn.Click += new System.EventHandler(this.ExportBtn_Click);
             // 
             // viewerPanel
             // 
@@ -301,7 +301,7 @@ namespace DicomLoader.View
             this.leftBtn.Size = new System.Drawing.Size(70, 95);
             this.leftBtn.TabIndex = 11;
             this.leftBtn.UseVisualStyleBackColor = false;
-            this.leftBtn.Click += new System.EventHandler(this.leftBtn_Click);
+            this.leftBtn.Click += new System.EventHandler(this.LeftBtn_Click);
             // 
             // rightPanel
             // 
@@ -327,7 +327,7 @@ namespace DicomLoader.View
             this.rightBtn.Size = new System.Drawing.Size(70, 95);
             this.rightBtn.TabIndex = 10;
             this.rightBtn.UseVisualStyleBackColor = false;
-            this.rightBtn.Click += new System.EventHandler(this.rightBtn_Click);
+            this.rightBtn.Click += new System.EventHandler(this.RightBtn_Click);
             // 
             // pictureBox
             // 
@@ -360,14 +360,14 @@ namespace DicomLoader.View
             this.dicomImportToolStripMenuItem.Name = "dicomImportToolStripMenuItem";
             this.dicomImportToolStripMenuItem.Size = new System.Drawing.Size(116, 24);
             this.dicomImportToolStripMenuItem.Text = "Dicom Import";
-            this.dicomImportToolStripMenuItem.Click += new System.EventHandler(this.dicomImportToolStripMenuItem_Click);
+            this.dicomImportToolStripMenuItem.Click += new System.EventHandler(this.DicomImportToolStripMenuItem_Click);
             // 
             // dicomUploadToolStripMenuItem
             // 
             this.dicomUploadToolStripMenuItem.Name = "dicomUploadToolStripMenuItem";
             this.dicomUploadToolStripMenuItem.Size = new System.Drawing.Size(120, 24);
             this.dicomUploadToolStripMenuItem.Text = "Dicom Upload";
-            this.dicomUploadToolStripMenuItem.Click += new System.EventHandler(this.dicomUploadToolStripMenuItem_Click);
+            this.dicomUploadToolStripMenuItem.Click += new System.EventHandler(this.DicomUploadToolStripMenuItem_Click);
             // 
             // MainWindow
             // 

@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DicomLoader.Controller;
@@ -21,10 +15,13 @@ namespace DicomLoader.View
         public UploadWindow(String Email)
         {
             InitializeComponent();
-            this.UserEmail = Email;
-            
+            this.UserEmail = Email;   
         }
-
+        /// <summary>
+        /// Get path of the record meant to be uploaded
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BrowseButton_Click(object sender, EventArgs e)
         {
             using var Result = new OpenFileDialog
@@ -48,12 +45,14 @@ namespace DicomLoader.View
                     const string message = "Hiba történt a file beolvasása közben";
                     const string caption = "Olvasási hiba";
                     MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-                
-
+                }         
             }
         }
-
+        /// <summary>
+        /// Handles upload request from users, and calls upload() method
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void UploadButton_Click(object sender, EventArgs e)
         {
             String PatientName = NameInput.Text.Trim();
@@ -76,9 +75,7 @@ namespace DicomLoader.View
                 }
                 DicomImage = "data:image/png;base64, ";
                 this.Close();
-
-            }
-            
+            }         
         }
     }
 }

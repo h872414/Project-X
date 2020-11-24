@@ -28,10 +28,13 @@ namespace DicomLoader.View
             ReSet();
             this.controller = new DicomController();
             this.UserEmail = email;
-            init();
+            Init();
         }
 
-        private static void init()
+        /// <summary>
+        /// Check if there is any stored Record in a local DB, it there is any tries to upload the to the server
+        /// </summary>
+        private static void Init()
         {
             Task.Run(async () => {
                 var RecordsStored = await WebController.CheckLocalDB();
@@ -46,42 +49,46 @@ namespace DicomLoader.View
                     if(await WController.Upload(UserEmail, PatientName, DicomImage, Description, RecordDate)) {
                         await WebController.DeleteRecord(Record);
                     }
-
                 }
-
             });
         }
-
+        /// <summary>
+        /// Handles importDirButton click event, and call importDicomDir function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e">Evenet argument</param>
         private async void ImportDirBtnClick(object sender, EventArgs e)
-        {         
-            using (var fbd = new FolderBrowserDialog())
+        {
+            using var fbd = new FolderBrowserDialog
             {
-                fbd.SelectedPath = Directory.GetCurrentDirectory();
-                DialogResult result = fbd.ShowDialog();
+                SelectedPath = Directory.GetCurrentDirectory()
+            };
+            DialogResult result = fbd.ShowDialog();
 
-                if (result == DialogResult.OK)
+            if (result == DialogResult.OK)
+            {
+                string[] files = Directory.GetFiles(fbd.SelectedPath);
+                var task = controller.ImportDicomDir(files);
+                images = await task;
+                multipleImageEnable = true;
+
+                if (images != null)
                 {
-                    string[] files = Directory.GetFiles(fbd.SelectedPath);
-                    var task = controller.ImportDicomDir(files);
-                    images = await task;
-                    multipleImageEnable = true;
-
-                    if(images != null)
-                    {
-                        pictureBox.Image = images.ElementAt(currentImage);
-                        inputDirPathLabel.Text = Path.GetFileName(Path.GetDirectoryName(files[0]));
-                        imageCountLabeld.Text = images.Count().ToString() + " / " + currentImage.ToString();
-                        ReSet();
-                        string message = images.Count().ToString() + " fájl olvasása sikeres";
-                        const string caption = "Sikeres beolvasás";
-                        MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
-                    
+                    pictureBox.Image = images.ElementAt(currentImage);
+                    inputDirPathLabel.Text = Path.GetFileName(Path.GetDirectoryName(files[0]));
+                    imageCountLabeld.Text = images.Count().ToString() + " / " + currentImage.ToString();
+                    ReSet();
+                    string message = images.Count().ToString() + " fájl olvasása sikeres";
+                    const string caption = "Sikeres beolvasás";
+                    MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
             }
-
         }
-
+        /// <summary>
+        /// Handles importButton click event, and call importDicomFile function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void ImportFileBtnClick(object sender, EventArgs e)
         {
             multipleImageEnable = false;
@@ -108,13 +115,14 @@ namespace DicomLoader.View
                     const string caption = "Hibás olvasás";
                     MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
             }
-            // var result = openFileDialog1.ShowDialog();
-
         }
-
-        private void leftBtn_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Load the previous dicom image fom array
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void LeftBtn_Click(object sender, EventArgs e)
         {
             if (multipleImageEnable && currentImage > 0)
             {
@@ -123,8 +131,12 @@ namespace DicomLoader.View
                 imageCountLabeld.Text = images.Count().ToString() + " / " + currentImage.ToString();
             }
         }
-
-        private void rightBtn_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Load the next dicom image fom array
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RightBtn_Click(object sender, EventArgs e)
         {
             if (multipleImageEnable && images.Count() > currentImage)
             {
@@ -133,12 +145,18 @@ namespace DicomLoader.View
                 imageCountLabeld.Text = images.Count().ToString() + " / " + currentImage.ToString();
             }
         }
-
+        /// <summary>
+        /// Handle window resize
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void SetResize(object sender, EventArgs e)
         {
             ReSet();
         }
-
+        /// <summary>
+        /// Resize the element of the window
+        /// </summary>
         private void ReSet()
         {
             pictureBox.Size = new Size(Convert.ToInt32(viewerPanel.Width * 0.6), Convert.ToInt32(viewerPanel.Height * 0.8));
@@ -149,19 +167,14 @@ namespace DicomLoader.View
             ResizeElemets(importBtn, singleImportPanel, loc: 0.5);
             ResizeElemets(choosenLabel, singleImportPanel, loc: 0.7);
             ResizeElemets(inputPathLabel, singleImportPanel, loc: 0.9);
-
             ResizeElemets(multipleLabel, multiImportPanel, loc: 0.05);
             ResizeElemets(importDirBtn, multiImportPanel, loc: 0.3);
             ResizeElemets(choosenDirLabel, multiImportPanel, loc: 0.6);
             ResizeElemets(inputDirPathLabel, multiImportPanel, loc: 0.8);
-
             ResizeElemets(exportBtn, exportPanel, loc: 0.2);
-
             currentPanel.Size = new Size(Convert.ToInt32(splitContainer.Panel2.Width), Convert.ToInt32(splitContainer.Panel2.Height * 0.1));
-
             ResizeElemets(currentLabel, currentPanel, 0.2, 0.8, 0.15);
             ResizeElemets(imageCountLabeld, currentPanel, 0.6, 0.8, 0.15);
-
         }
         private void ResizeElemets(Control element, Control panel, double loc, double heigth = 0.2, double fontSize = 0.06)
         {
@@ -169,8 +182,12 @@ namespace DicomLoader.View
             element.Size = new Size(Convert.ToInt32(panel.Width * 0.4), Convert.ToInt32(panel.Height * heigth));
             element.Location = new Point((panel.Width - element.Width) / 2, Convert.ToInt32(panel.Height * loc));
         }
-
-        private void exportBtn_Click(object sender, EventArgs e)
+        /// <summary>
+        /// Handles export request from user, and call export function
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ExportBtn_Click(object sender, EventArgs e)
         {
             using var dialog = new SaveFileDialog
             {
@@ -200,7 +217,6 @@ namespace DicomLoader.View
                 {
                     if (controller.ExportFile(dialog.FileName, singlePicture))
                     {
-
                         if (controller.ExportDir(dialog.FileName, images))
                         {
                             const string message = "Sikeres exportálás.";
@@ -214,21 +230,17 @@ namespace DicomLoader.View
                             MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
-
                 }
-
             }
-
-
         }
 
-        private void dicomImportToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DicomImportToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Controls.Add(this.splitContainer);
             ReSet();
         }
 
-        private void dicomUploadToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DicomUploadToolStripMenuItem_Click(object sender, EventArgs e)
         {
             new UploadWindow(UserEmail).Show();
         }

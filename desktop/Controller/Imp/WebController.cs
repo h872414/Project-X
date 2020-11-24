@@ -2,14 +2,11 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
-using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using DicomLoader.Model;
 using DicomLoader.Model.DAO;
-
 using Newtonsoft.Json;
 
 namespace DicomLoader.Controller
@@ -18,17 +15,30 @@ namespace DicomLoader.Controller
     {
         private static readonly HttpClient client = new HttpClient();
         private static readonly RecordDao dao = new RecordDao();
+
+        /// <summary>
+        /// Send sign a resuest to server with user email and password, wait for the response,
+        /// if acces granted start the mainWindow
+        /// </summary>
+        /// <param name="email">user's email</param>
+        /// <param name="password">user's password</param>
+        /// <returns>
+        ///     true - if acces granted to application, 
+        ///     false - some parameter do not match of the requirement
+        /// </returns>
         public async Task<bool> SignIn(string email, string password)
         {
-            String responseBody = null;
+            String ResponseBody = null;
             var parameters = new Dictionary<string, string> { { "Email", email}, { "Password", password } };
             var encodedContent = new FormUrlEncodedContent(parameters);
             var result =  client.PostAsync(ConfigurationManager.AppSettings["SignInURL"], encodedContent); ;
             HttpResponseMessage response = null;
+
             try
             {
                 response = await result;
-            }catch(Exception exception)
+            }
+            catch(Exception exception)
             {
                 Debug.WriteLine(exception.ToString());
                 const string message = "Server hiba";
@@ -41,9 +51,10 @@ namespace DicomLoader.Controller
             {
                 response.EnsureSuccessStatusCode();
                 var contentStream = await response.Content.ReadAsStreamAsync();
-                responseBody = await response.Content.ReadAsStringAsync();       
-                dynamic json = JsonConvert.DeserializeObject(responseBody);
-                Boolean accepted = Convert.ToBoolean(json["accepted"]);
+                ResponseBody = await response.Content.ReadAsStringAsync();       
+                dynamic json = JsonConvert.DeserializeObject(ResponseBody);
+                bool accepted = Convert.ToBoolean(json["accepted"]);
+
                 if (accepted) 
                 {
                     if (DateTime.Today > Convert.ToDateTime(json["licenseDate"]))
@@ -82,9 +93,20 @@ namespace DicomLoader.Controller
 
         }
 
+        /// <summary>
+        /// Upload the record to server, if server is not responding store it in a local DB
+        /// </summary>
+        /// <param name="Email">Uploader's email</param>
+        /// <param name="PatientName">Patient's name</param>
+        /// <param name="DicomImage">Dicom image</param>
+        /// <param name="Description">Description of the image</param>
+        /// <param name="RecordDate">Date of the record</param>
+        /// <returns>
+        ///     true - if upload was successfull
+        ///     false - unsuccessfull upload
+        /// </returns>
         public async Task<bool> Upload(string Email, string PatientName, string DicomImage, string Description, DateTime RecordDate)
-        {
-    
+        {   
             var parameters = new Dictionary<string, string> { 
                 { "Email", Email }, 
                 { "DicomImage", DicomImage },
@@ -125,11 +147,20 @@ namespace DicomLoader.Controller
 
         }
 
+        /// <summary>
+        /// List if there is any unuploaded records in local db
+        /// </summary>
+        /// <returns>List of unuploaded Records</returns>
         public static async Task<IList<Record>> CheckLocalDB()
         {
            return await dao.ListRecord();
         }
 
+        /// <summary>
+        /// Delete unuploaded records
+        /// </summary>
+        /// <param name="Record">Record to delete</param>
+        /// <returns></returns>
         public static async Task DeleteRecord(Record Record)
         {
             await dao.DeleteRecord(Record);
