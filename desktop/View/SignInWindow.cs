@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-
 using DicomLoader.Controller;
-using DicomLoader.Model;
-using DicomLoader.Model.DAO;
 
 namespace DicomLoader.View
 {
@@ -20,13 +15,16 @@ namespace DicomLoader.View
             InitializeComponent();
 
         }
-
-
+        /// <summary>
+        /// Handles registration request from user, and load Registration page from the server
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void RegButton_Click(object sender, EventArgs e)
         {
             try
             {
-                System.Diagnostics.Process.Start(ConfigurationManager.AppSettings["RegisterURL"]);
+                Process.Start(ConfigurationManager.AppSettings["RegisterURL"]);
             }catch(Exception exception)
             {
                 Debug.WriteLine(exception.ToString());
@@ -34,9 +32,13 @@ namespace DicomLoader.View
                 const string caption = "Link hiba";
                 MessageBox.Show(message, caption, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            
         }
 
+        /// <summary>
+        /// Handles sign in request of the user, call sign in method of server
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void SignInButton_Click(object sender, EventArgs e)
         {
             String email = EmailTextBox.Text.Trim();
@@ -44,15 +46,10 @@ namespace DicomLoader.View
 
             var result = await controller.SignIn(email, password);
             if (result)
-            {
-               
+            {         
                 new MainWindow(email).Show();
-                this.Hide();
-  
+                this.Hide(); 
             }
-
-
         }
-
     }
 }
