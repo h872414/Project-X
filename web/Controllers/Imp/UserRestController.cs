@@ -13,6 +13,15 @@ namespace DicomLoaderWeb.Controllers.Imp
     {
         private readonly EFContext _Context = new EFContext();
 
+        /// <summary>
+        /// Handles post request from the desktop application ad store them in DB
+        /// </summary>
+        /// <param name="Email">user's email</param>
+        /// <param name="DicomImage">Dicom image</param>
+        /// <param name="PatientName">Patient's name</param>
+        /// <param name="Description">Image description</param>
+        /// <param name="Date">Record's date</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("/Upload")]
         public async Task<ActionResult> Update(string Email, string DicomImage, string PatientName, string Description, string Date)
@@ -25,7 +34,6 @@ namespace DicomLoaderWeb.Controllers.Imp
             try
             {
                 var Users = await _Context.Users.Where(x => x.Email == Email).ToArrayAsync();
-
                 if(Users.Length == 0 ) return UnprocessableEntity();
 
                 SendingUser = Users[0];
@@ -39,17 +47,20 @@ namespace DicomLoaderWeb.Controllers.Imp
 
                 _Context.Add(InputRecord);
                 await _Context.SaveChangesAsync();
-                return Ok();
-          
+                return Ok();         
             }
             catch(Exception)
             {
                 return StatusCode(500);
             }
-
         }
 
-        //Handle HTTP request from desktop App
+        /// <summary>
+        /// Handles the post request from desktop application 
+        /// </summary>
+        /// <param name="Email">user's email</param>
+        /// <param name="Password">user's password</param>
+        /// <returns></returns>
         [HttpPost]
         [Route("/SignInDesktop")]
         public async Task<ActionResult> GetData(String Email, String Password)
@@ -99,11 +110,7 @@ namespace DicomLoaderWeb.Controllers.Imp
                     return Ok(new { accepted = false, error = "Lejárt license" });
                 }
             }
-
-
-
             return Ok(new { accepted = false, error = "Hibás jelszó" });
-
         }
     }
 }
