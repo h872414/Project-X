@@ -94,7 +94,7 @@ namespace DicomLoader.Controller
         }
 
         /// <summary>
-        /// Upload the record to server
+        /// Upload the record to server, if server is not responding store it in a local DB
         /// </summary>
         /// <param name="Email">Uploader's email</param>
         /// <param name="PatientName">Patient's name</param>
@@ -148,7 +148,7 @@ namespace DicomLoader.Controller
         }
 
         /// <summary>
-        /// List if there is any unuploaded records in locas db
+        /// List if there is any unuploaded records in local db
         /// </summary>
         /// <returns>List of unuploaded Records</returns>
         public static async Task<IList<Record>> CheckLocalDB()

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.Data.Sqlite;
 
 namespace DicomLoader.Model.DAO
 {
@@ -32,6 +27,14 @@ namespace DicomLoader.Model.DAO
                 Command.ExecuteNonQuery();
             }
         }
+        /// <summary>
+        /// Add record to local DB
+        /// </summary>
+        /// <param name="Record">Record to be added to local db</param>
+        /// <returns>
+        ///     Task<Record> - DB operation was successfull
+        ///     null - DB operation was unsuccessfull
+        /// </returns>
         public async Task<Record> AddRecord(Record Record)
         {
             if(Record == null)
@@ -45,8 +48,11 @@ namespace DicomLoader.Model.DAO
                 using (SQLiteCommand Command = db.CreateCommand())
                 {
                     db.Open();
-                    Command.CommandText = "INSERT INTO Records(Email,PatientName,Image,Description,RecordDate) " +
-                        "VALUES(@Email, @PatientName, @Image, @Description, @RecordDate);";
+                    Command.CommandText =
+                        "INSERT INTO Records" +
+                        "(Email,PatientName,Image,Description,RecordDate) " +
+                        "VALUES" +
+                        "(@Email, @PatientName, @Image, @Description, @RecordDate);";
 
                     Command.Parameters.Add("Email", DbType.String).Value = Record.Email;
                     Command.Parameters.Add("PatientName", DbType.String).Value = Record.PatientName;
@@ -61,6 +67,14 @@ namespace DicomLoader.Model.DAO
             return AffectedRows != 1 ? null : Record;
         }
 
+        /// <summary>
+        /// Delete record from local DB
+        /// </summary>
+        /// <param name="Record">Record to be deleted</param>
+        /// <returns>
+        ///     Task<Record> - DB operation was successfull
+        ///     null - DB operation was unsuccessfull
+        /// </returns>
         public async Task<Record> DeleteRecord(Record Record)
         {
             int Affectedrows = 0;
@@ -78,30 +92,35 @@ namespace DicomLoader.Model.DAO
             });
             return Affectedrows != 1 ? null : Record;
         }
-
+        /// <summary>
+        /// List the stored Records form DB
+        /// </summary>
+        /// <returns>
+        ///     Task<IList<Record>> - DB operation was successfull
+        ///     null - DB operation was unsuccessfull
+        /// </returns>
         public async Task<IList<Record>> ListRecord()
         {
             IList<Record> Records = null;
             await Task.Run(() =>
             {
-
-                using (SQLiteConnection db = new SQLiteConnection(s_connectionString))
-                using (SQLiteCommand Command = db.CreateCommand())
-                {
-                    Command.CommandText = "SELECT * FROM Records";
-                    db.Open();
-
-                    using (SQLiteDataReader reader = Command.ExecuteReader())
-                    {
-                        Records = ReadRecordsFromReader(reader);
-                    }
-                }
-            });
-           
-            return Records;
-            
+                using SQLiteConnection db = new SQLiteConnection(s_connectionString);
+                using SQLiteCommand Command = db.CreateCommand();
+                Command.CommandText = "SELECT * FROM Records";
+                db.Open();
+                using SQLiteDataReader reader = Command.ExecuteReader();
+                Records = ReadRecordsFromReader(reader);
+            });          
+            return Records;         
         }
-
+        /// <summary>
+        /// Read SQLiteDatareader
+        /// </summary>
+        /// <param name="reader">DataReader with the information</param>
+        /// <returns>
+        ///     IList<Record> - Record readed from RecordReader
+        ///     null - Recordreader does not containt any infomation
+        /// </returns>
         private IList<Record> ReadRecordsFromReader(SQLiteDataReader reader)
         {
             List<Record> Records = new List<Record>();
@@ -116,7 +135,6 @@ namespace DicomLoader.Model.DAO
                     Description = reader.GetString(reader.GetOrdinal("Description")),
                     RecordDate = reader.GetDateTime(reader.GetOrdinal("RecordDate"))
                 };
-
                 Records.Add(Record);
             }
             return Records;
