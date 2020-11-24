@@ -1,10 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "emQ8Jsv73KsBCDqO2a0SrOuQDDV0HYF/zsTzNh2Z+2Pd+dh9m0EAIU5vxXnb1Fbu24I5ftnGCaApN8CMyIBLAg==",
+  "dgSpecHash": "Z89deFf2d04h8gfKKYfHE9xUkLvKfY9OhH8Frv7M83I9GhriTJSL8US95fDNio3QiNnu5F0WNLKvYwhgQOQOIw==",
   "success": true,
   "projectFilePath": "C:\\Users\\KT\\Source\\Repos\\alkfejk\\Project-X\\web\\DicomLoaderWeb.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\KT\\.nuget\\packages\\fo-dicom.desktop\\4.0.6\\fo-dicom.desktop.4.0.6.nupkg.sha512",
     "C:\\Users\\KT\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.6\\microsoft.aspnet.webapi.client.5.2.6.nupkg.sha512",
     "C:\\Users\\KT\\.nuget\\packages\\microsoft.aspnetcore\\2.1.7\\microsoft.aspnetcore.2.1.7.nupkg.sha512",
     "C:\\Users\\KT\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.1.1\\microsoft.aspnetcore.antiforgery.2.1.1.nupkg.sha512",
@@ -311,16 +310,5 @@
     "C:\\Users\\KT\\.nuget\\packages\\system.xml.xpath\\4.3.0\\system.xml.xpath.4.3.0.nupkg.sha512",
     "C:\\Users\\KT\\.nuget\\packages\\system.xml.xpath.xdocument\\4.3.0\\system.xml.xpath.xdocument.4.3.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'fo-dicom.Desktop 4.0.6' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "fo-dicom.Desktop",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    }
-  ]
+  "logs": []
 }

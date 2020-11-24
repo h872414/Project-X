@@ -98,7 +98,7 @@ using DicomLoaderWeb.Models;
             WriteLiteral("                <p class=\"lead\">\r\n                    ");
             EndContext();
             BeginContext(667, 99, false);
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "a422e64bd46d4bc3bc3a1f5bd5b3f35d", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d6fc2d2becda449f9ba1383b7595f87b", async() => {
                 BeginContext(754, 8, true);
                 WriteLiteral("Kezdőlap");
                 EndContext();

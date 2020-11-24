@@ -2,18 +2,6 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v2.1": {
-      "fo-dicom.Desktop/4.0.6": {
-        "type": "package",
-        "compile": {
-          "lib/net45/Dicom.Core.dll": {}
-        },
-        "runtime": {
-          "lib/net45/Dicom.Core.dll": {}
-        },
-        "build": {
-          "build/net45/fo-dicom.Desktop.targets": {}
-        }
-      },
       "Microsoft.AspNet.WebApi.Client/5.2.6": {
         "type": "package",
         "dependencies": {
@@ -4804,23 +4792,6 @@
     }
   },
   "libraries": {
-    "fo-dicom.Desktop/4.0.6": {
-      "sha512": "ZblXXAMcQN7xHc7OuQ+Jqz5U5dlT9gTPk36aWmJnWCQ/qqY8bjo4uvLZPvnHy4HUDZWAc06pJfw+TJ41V2KmYA==",
-      "type": "package",
-      "path": "fo-dicom.desktop/4.0.6",
-      "files": [
-        ".nupkg.metadata",
-        ".signature.p7s",
-        "build/net45/Dicom.Native.dll",
-        "build/net45/Dicom.Native64.dll",
-        "build/net45/fo-dicom.Desktop.targets",
-        "fo-dicom.desktop.4.0.6.nupkg.sha512",
-        "fo-dicom.desktop.nuspec",
-        "lib/net45/Dicom.Core.XML",
-        "lib/net45/Dicom.Core.dll",
-        "lib/net45/Dicom.Core.pdb"
-      ]
-    },
     "Microsoft.AspNet.WebApi.Client/5.2.6": {
       "sha512": "owAlEIUZXWSnkK8Z1c+zR47A0X6ykF4XjbPok4lQKNuciUfHLGPd6QnI+rt/8KlQ17PmF+I4S3f+m+Qe4IvViw==",
       "type": "package",
@@ -13019,8 +12990,7 @@
       "Microsoft.NETCore.App >= 2.1.0",
       "Microsoft.VisualStudio.Web.BrowserLink >= 2.1.1",
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 2.1.10",
-      "System.ComponentModel.Annotations >= 4.7.0",
-      "fo-dicom.Desktop >= 4.0.6"
+      "System.ComponentModel.Annotations >= 4.7.0"
     ]
   },
   "packageFolders": {
@@ -13122,10 +13092,6 @@
           "System.ComponentModel.Annotations": {
             "target": "Package",
             "version": "[4.7.0, )"
-          },
-          "fo-dicom.Desktop": {
-            "target": "Package",
-            "version": "[4.0.6, )"
           }
         },
         "imports": [
@@ -13141,17 +13107,5 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
       }
     }
-  },
-  "logs": [
-    {
-      "code": "NU1701",
-      "level": "Warning",
-      "warningLevel": 1,
-      "message": "Package 'fo-dicom.Desktop 4.0.6' was restored using '.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8' instead of the project target framework '.NETCoreApp,Version=v2.1'. This package may not be fully compatible with your project.",
-      "libraryId": "fo-dicom.Desktop",
-      "targetGraphs": [
-        ".NETCoreApp,Version=v2.1"
-      ]
-    }
-  ]
+  }
 }
